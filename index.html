@@ -31,7 +31,7 @@
         <div class="w-9 h-9 bg-blue-600 rounded-lg flex items-center justify-center text-white font-black text-sm shadow-sm">SB</div>
         <div>
           <span class="text-lg sm:text-xl font-black text-slate-900 tracking-tight block leading-tight">WEB SUKMA BOGOR</span>
-          <span class="text-[10px] text-slate-500 font-medium hidden sm:block">Aplikasi Pembuat Dokumen & Surat Otomatis</span>
+          <span class="text-[10px] text-slate-500 font-medium hidden sm:block">Aplikasi Pembuat Dokumen, Surat & Perjanjian Otomatis</span>
         </div>
       </div>
       <span class="text-xs font-semibold px-2.5 py-1 bg-blue-50 text-blue-700 rounded-full border border-blue-100">Siap Cetak / PDF</span>
@@ -45,29 +45,34 @@
     <section id="menu-dashboard" class="space-y-8">
       <div class="text-center py-6">
         <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Selamat Datang di WEB SUKMA BOGOR</h2>
-        <p class="text-slate-600 mt-2 text-sm sm:text-base max-w-xl mx-auto">Silakan pilih jenis dokumen yang ingin dibuat. Isi kolomnya dengan mudah, lalu cetak langsung atau simpan dalam format PDF.</p>
+        <p class="text-slate-600 mt-2 text-sm sm:text-base max-w-xl mx-auto">Pilih template yang Anda perlukan atau ketik langsung di kolom pencarian di bawah.</p>
+        
+        <!-- Search Bar -->
+        <div class="mt-6 max-w-md mx-auto relative">
+          <input type="text" id="searchInput" oninput="filterDokumen()" placeholder="🔍 Cari dokumen... (misal: tanah, girik, kwitansi, sewa)" class="w-full pl-4 pr-10 py-2.5 bg-white rounded-xl border border-slate-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
+        </div>
       </div>
 
       <!-- Kategori 1: Keuangan & Transaksi Bisnis -->
-      <div>
+      <div class="kategori-section">
         <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
           <span>💼 Keuangan & Transaksi Usaha</span>
           <span class="flex-1 h-px bg-slate-200"></span>
         </h3>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div onclick="pilihMenu('invoice')" class="bg-white p-5 rounded-xl border border-slate-200 hover:border-blue-500 hover:shadow-md transition cursor-pointer group">
+          <div onclick="pilihMenu('invoice')" class="doc-card bg-white p-5 rounded-xl border border-slate-200 hover:border-blue-500 hover:shadow-md transition cursor-pointer group" data-keywords="invoice tagihan penjualan nota pembayaran toko bisnis">
             <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center font-bold text-lg mb-3 group-hover:scale-105 transition-transform">📄</div>
             <h4 class="font-bold text-slate-900">Invoice Penjualan</h4>
-            <p class="text-xs text-slate-500 mt-1">Tagihan pembayaran barang/jasa dengan hitungan subtotal otomatis.</p>
+            <p class="text-xs text-slate-500 mt-1">Tagihan pembayaran barang/jasa dengan hitungan otomatis.</p>
           </div>
 
-          <div onclick="pilihMenu('kwitansi')" class="bg-white p-5 rounded-xl border border-slate-200 hover:border-amber-500 hover:shadow-md transition cursor-pointer group">
+          <div onclick="pilihMenu('kwitansi')" class="doc-card bg-white p-5 rounded-xl border border-slate-200 hover:border-amber-500 hover:shadow-md transition cursor-pointer group" data-keywords="kwitansi pembayaran tanda terima uang kas terbilang">
             <div class="w-10 h-10 bg-amber-50 text-amber-600 rounded-lg flex items-center justify-center font-bold text-lg mb-3 group-hover:scale-105 transition-transform">🧾</div>
             <h4 class="font-bold text-slate-900">Kwitansi Pembayaran</h4>
-            <p class="text-xs text-slate-500 mt-1">Tanda terima uang resmi dengan konversi otomatis nominal ke kata terbilang.</p>
+            <p class="text-xs text-slate-500 mt-1">Tanda terima uang resmi dengan konversi angka ke huruf terbilang.</p>
           </div>
 
-          <div onclick="pilihMenu('slip-gaji')" class="bg-white p-5 rounded-xl border border-slate-200 hover:border-emerald-500 hover:shadow-md transition cursor-pointer group">
+          <div onclick="pilihMenu('slip-gaji')" class="doc-card bg-white p-5 rounded-xl border border-slate-200 hover:border-emerald-500 hover:shadow-md transition cursor-pointer group" data-keywords="slip gaji karyawan pegawai honor upah umkm kantor">
             <div class="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center font-bold text-lg mb-3 group-hover:scale-105 transition-transform">💰</div>
             <h4 class="font-bold text-slate-900">Slip Gaji Karyawan</h4>
             <p class="text-xs text-slate-500 mt-1">Rincian gaji pokok, tunjangan, dan potongan karyawan/UMKM.</p>
@@ -75,26 +80,48 @@
         </div>
       </div>
 
-      <!-- Kategori 2: Surat Perjanjian & Legalitas -->
-      <div>
+      <!-- Kategori 2: Surat Perjanjian, Properti & Kendaraan -->
+      <div class="kategori-section">
         <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
-          <span>📜 Perjanjian & Pengiriman</span>
+          <span>📜 Jual Beli, Properti & Legalitas</span>
           <span class="flex-1 h-px bg-slate-200"></span>
         </h3>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div onclick="pilihMenu('sewa-kos')" class="bg-white p-5 rounded-xl border border-slate-200 hover:border-cyan-500 hover:shadow-md transition cursor-pointer group">
-            <div class="w-10 h-10 bg-cyan-50 text-cyan-600 rounded-lg flex items-center justify-center font-bold text-lg mb-3 group-hover:scale-105 transition-transform">🏠</div>
-            <h4 class="font-bold text-slate-900">Perjanjian Sewa Kos / Rumah</h4>
-            <p class="text-xs text-slate-500 mt-1">Surat kesepakatan sewa properti, aturan deposit, dan jangka waktu.</p>
+          <!-- TEMPLATE JUAL BELI TANAH NON-SERTIFIKAT -->
+          <div onclick="pilihMenu('jual-beli-tanah')" class="doc-card bg-white p-5 rounded-xl border-2 border-amber-300 hover:border-amber-600 hover:shadow-md transition cursor-pointer group" data-keywords="jual beli tanah girik adat leter c letter c petuk petok d sawah kebun kapling belum bersertifikat shm non sertifikat">
+            <div class="w-10 h-10 bg-amber-100 text-amber-800 rounded-lg flex items-center justify-center font-bold text-lg mb-3 group-hover:scale-105 transition-transform">🌾</div>
+            <div class="flex items-center gap-1.5">
+              <h4 class="font-bold text-slate-900">Jual Beli Tanah (Girik / Letter C)</h4>
+              <span class="bg-amber-500 text-white text-[9px] px-1.5 py-0.5 rounded font-bold uppercase">Penting</span>
+            </div>
+            <p class="text-xs text-slate-500 mt-1">Perjanjian tanah adat/girik/belum SHM lengkap dengan 4 batas tanah & saksi desa.</p>
           </div>
 
-          <div onclick="pilihMenu('surat-jalan')" class="bg-white p-5 rounded-xl border border-slate-200 hover:border-teal-500 hover:shadow-md transition cursor-pointer group">
+          <div onclick="pilihMenu('jual-beli-kendaraan')" class="doc-card bg-white p-5 rounded-xl border border-slate-200 hover:border-blue-600 hover:shadow-md transition cursor-pointer group" data-keywords="jual beli kendaraan motor mobil stnk bpkb perjanjian">
+            <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center font-bold text-lg mb-3 group-hover:scale-105 transition-transform">🏍️</div>
+            <h4 class="font-bold text-slate-900">Jual Beli Motor / Mobil</h4>
+            <p class="text-xs text-slate-500 mt-1">Perjanjian kendaraan bermotor lengkap data nomor mesin, rangka & STNK/BPKB.</p>
+          </div>
+
+          <div onclick="pilihMenu('sewa-kos')" class="doc-card bg-white p-5 rounded-xl border border-slate-200 hover:border-cyan-500 hover:shadow-md transition cursor-pointer group" data-keywords="sewa kos rumah kontrakan properti ruko perjanjian">
+            <div class="w-10 h-10 bg-cyan-50 text-cyan-600 rounded-lg flex items-center justify-center font-bold text-lg mb-3 group-hover:scale-105 transition-transform">🏠</div>
+            <h4 class="font-bold text-slate-900">Perjanjian Sewa Kos / Rumah</h4>
+            <p class="text-xs text-slate-500 mt-1">Surat kesepakatan sewa properti, deposit, dan jangka waktu.</p>
+          </div>
+
+          <div onclick="pilihMenu('surat-pernyataan')" class="doc-card bg-white p-5 rounded-xl border border-slate-200 hover:border-orange-500 hover:shadow-md transition cursor-pointer group" data-keywords="surat pernyataan kesepakatan bersama damai perjanjian utang piutang">
+            <div class="w-10 h-10 bg-orange-50 text-orange-600 rounded-lg flex items-center justify-center font-bold text-lg mb-3 group-hover:scale-105 transition-transform">📝</div>
+            <h4 class="font-bold text-slate-900">Surat Pernyataan Bersama</h4>
+            <p class="text-xs text-slate-500 mt-1">Kesepakatan damai atau pernyataan bermaterai serbaguna.</p>
+          </div>
+
+          <div onclick="pilihMenu('surat-jalan')" class="doc-card bg-white p-5 rounded-xl border border-slate-200 hover:border-teal-500 hover:shadow-md transition cursor-pointer group" data-keywords="surat jalan ekspedisi pengiriman kurir barang delivery">
             <div class="w-10 h-10 bg-teal-50 text-teal-600 rounded-lg flex items-center justify-center font-bold text-lg mb-3 group-hover:scale-105 transition-transform">🚚</div>
             <h4 class="font-bold text-slate-900">Surat Jalan / Pengiriman</h4>
             <p class="text-xs text-slate-500 mt-1">Surat pengantar barang ekspedisi lengkap dengan kolom tanda tangan.</p>
           </div>
 
-          <div onclick="pilihMenu('surat-kuasa')" class="bg-white p-5 rounded-xl border border-slate-200 hover:border-indigo-500 hover:shadow-md transition cursor-pointer group">
+          <div onclick="pilihMenu('surat-kuasa')" class="doc-card bg-white p-5 rounded-xl border border-slate-200 hover:border-indigo-500 hover:shadow-md transition cursor-pointer group" data-keywords="surat kuasa wewenang bank ktp dokumen perwakilan">
             <div class="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-lg flex items-center justify-center font-bold text-lg mb-3 group-hover:scale-105 transition-transform">📋</div>
             <h4 class="font-bold text-slate-900">Surat Kuasa</h4>
             <p class="text-xs text-slate-500 mt-1">Pelimpahan wewenang urusan perbankan, dokumen, atau instansi.</p>
@@ -103,25 +130,25 @@
       </div>
 
       <!-- Kategori 3: Karir, Surat Izin & Acara -->
-      <div>
+      <div class="kategori-section">
         <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
           <span>✍️ Karir, Izin & Keperluan Umum</span>
           <span class="flex-1 h-px bg-slate-200"></span>
         </h3>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div onclick="pilihMenu('lamaran-kerja')" class="bg-white p-5 rounded-xl border border-slate-200 hover:border-violet-500 hover:shadow-md transition cursor-pointer group">
+          <div onclick="pilihMenu('lamaran-kerja')" class="doc-card bg-white p-5 rounded-xl border border-slate-200 hover:border-violet-500 hover:shadow-md transition cursor-pointer group" data-keywords="surat lamaran kerja job application karir resume lowongan">
             <div class="w-10 h-10 bg-violet-50 text-violet-600 rounded-lg flex items-center justify-center font-bold text-lg mb-3 group-hover:scale-105 transition-transform">💼</div>
             <h4 class="font-bold text-slate-900">Surat Lamaran Kerja</h4>
             <p class="text-xs text-slate-500 mt-1">Format profesional untuk melamar pekerjaan di berbagai perusahaan.</p>
           </div>
 
-          <div onclick="pilihMenu('surat-izin')" class="bg-white p-5 rounded-xl border border-slate-200 hover:border-rose-500 hover:shadow-md transition cursor-pointer group">
+          <div onclick="pilihMenu('surat-izin')" class="doc-card bg-white p-5 rounded-xl border border-slate-200 hover:border-rose-500 hover:shadow-md transition cursor-pointer group" data-keywords="surat izin sakit cuti absen sekolah kantor kerja tidak masuk">
             <div class="w-10 h-10 bg-rose-50 text-rose-600 rounded-lg flex items-center justify-center font-bold text-lg mb-3 group-hover:scale-105 transition-transform">🩹</div>
             <h4 class="font-bold text-slate-900">Surat Izin / Sakit</h4>
-            <p class="text-xs text-slate-500 mt-1">Permohonan izin tidak masuk kerja atau absen sekolah karena sakit/urusan.</p>
+            <p class="text-xs text-slate-500 mt-1">Permohonan izin absen sekolah atau cuti kerja sakit/keperluan keluarga.</p>
           </div>
 
-          <div onclick="pilihMenu('surat-undangan')" class="bg-white p-5 rounded-xl border border-slate-200 hover:border-purple-500 hover:shadow-md transition cursor-pointer group">
+          <div onclick="pilihMenu('surat-undangan')" class="doc-card bg-white p-5 rounded-xl border border-slate-200 hover:border-purple-500 hover:shadow-md transition cursor-pointer group" data-keywords="surat undangan rapat pertemuan warga acara resmi organisasi">
             <div class="w-10 h-10 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center font-bold text-lg mb-3 group-hover:scale-105 transition-transform">✉️</div>
             <h4 class="font-bold text-slate-900">Surat Undangan</h4>
             <p class="text-xs text-slate-500 mt-1">Undangan rapat, kegiatan warga, serta pertemuan formal organisasi.</p>
@@ -138,17 +165,25 @@
           <span class="text-base">←</span> Kembali ke Menu
         </button>
 
-        <!-- Tool Tambahan: Pasang Logo & Cap -->
-        <div class="flex flex-wrap items-center gap-4 text-xs font-medium">
+        <!-- Tool Tambahan: Logo, Stempel & TTD -->
+        <div class="flex flex-wrap items-center gap-3 text-xs font-medium">
           <label class="cursor-pointer bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg border border-slate-300 text-slate-700 flex items-center gap-1">
             📷 Pasang Logo
             <input type="file" id="logo-uploader" accept="image/*" class="hidden" onchange="uploadLogo(event)">
           </label>
 
-          <label class="flex items-center gap-1.5 cursor-pointer select-none">
-            <input type="checkbox" id="toggle-stamp" onchange="toggleStamp(this.checked)" class="rounded text-red-600">
-            <span>Tampilkan Cap "LUNAS"</span>
-          </label>
+          <!-- Dropdown Pilihan Stempel -->
+          <select id="select-stamp" onchange="gantiStempel(this.value)" class="bg-slate-100 border border-slate-300 px-2.5 py-1.5 rounded-lg text-slate-700 outline-none">
+            <option value="">Tanpa Stempel</option>
+            <option value="LUNAS">Cap: LUNAS (Merah)</option>
+            <option value="ASLI">Cap: ASLI (Biru)</option>
+            <option value="DISETUJUI">Cap: DISETUJUI (Hijau)</option>
+          </select>
+
+          <!-- Tombol Buka Pad TTD Digital -->
+          <button onclick="bukaModalTTD()" class="bg-slate-100 hover:bg-slate-200 border border-slate-300 px-3 py-1.5 rounded-lg text-slate-700 flex items-center gap-1">
+            ✍️ Tanda Tangan Digital
+          </button>
         </div>
 
         <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2 rounded-lg shadow-sm text-sm flex items-center gap-2">
@@ -158,8 +193,8 @@
 
       <!-- Lembar Kertas Dokumen (Preview & Edit Langsung) -->
       <div id="printable-area" class="bg-white border border-slate-200 shadow-sm rounded-xl p-8 sm:p-12 max-w-3xl mx-auto min-h-[750px] text-sm relative">
-        <!-- Cap Lunas Stempel Digital -->
-        <div id="stamp-lunas" class="hidden absolute top-20 right-12 border-4 border-red-500 text-red-600 font-extrabold text-2xl uppercase tracking-widest px-4 py-1.5 rotate-[-15deg] rounded-md opacity-80 pointer-events-none select-none">
+        <!-- Cap Stempel Digital -->
+        <div id="stamp-badge" class="hidden absolute top-20 right-12 border-4 font-extrabold text-2xl uppercase tracking-widest px-4 py-1.5 rotate-[-15deg] rounded-md opacity-80 pointer-events-none select-none">
           LUNAS
         </div>
 
@@ -174,21 +209,67 @@
 
   </main>
 
+  <!-- MODAL POPUP TANDA TANGAN DIGITAL -->
+  <div id="modal-ttd" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 no-print">
+    <div class="bg-white rounded-2xl max-w-md w-full p-5 space-y-4 shadow-xl">
+      <div class="flex justify-between items-center border-b pb-2">
+        <h3 class="font-bold text-slate-800 text-base">Tanda Tangan Digital</h3>
+        <button onclick="tutupModalTTD()" class="text-slate-400 hover:text-slate-600 font-bold text-xl">&times;</button>
+      </div>
+      <p class="text-xs text-slate-500">Gunakan jari tangan di layar HP atau mouse laptop untuk menandatangani:</p>
+      
+      <div class="border-2 border-dashed border-slate-300 rounded-xl overflow-hidden bg-slate-50">
+        <canvas id="canvas-ttd" width="400" height="180" class="w-full h-44 cursor-crosshair touch-none"></canvas>
+      </div>
+
+      <div class="flex justify-between items-center pt-2">
+        <button onclick="bersihkanTTD()" class="text-xs text-rose-600 font-semibold px-3 py-1.5 hover:bg-rose-50 rounded-lg">Hapus / Ulangi</button>
+        <div class="space-x-2">
+          <button onclick="tutupModalTTD()" class="text-xs px-3 py-1.5 rounded-lg border text-slate-600">Batal</button>
+          <button onclick="simpanTTD()" class="text-xs px-4 py-1.5 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700">Terapkan ke Dokumen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500 no-print mt-12">
     <p>&copy; 2026 <strong class="text-slate-700">WEB SUKMA BOGOR</strong>. Semua hak dilindungi.</p>
   </footer>
 
   <script>
+    let tandaTanganDataURL = "";
+
+    // SEARCH FILTER
+    function filterDokumen() {
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      const cards = document.querySelectorAll('.doc-card');
+      const sections = document.querySelectorAll('.kategori-section');
+
+      cards.forEach(card => {
+        const text = card.textContent.toLowerCase();
+        const kw = card.getAttribute('data-keywords') || '';
+        if (text.includes(q) || kw.includes(q)) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      sections.forEach(sec => {
+        const visibleCards = sec.querySelectorAll('.doc-card:not(.hidden)');
+        sec.style.display = visibleCards.length > 0 ? 'block' : 'none';
+      });
+    }
+
     // FUNGSI NAVIGASI
     function pilihMenu(tipe) {
       const dashboard = document.getElementById('menu-dashboard');
       const editor = document.getElementById('menu-editor');
       const konten = document.getElementById('konten-dokumen');
 
-      // Reset stempel cap saat ganti menu
-      document.getElementById('toggle-stamp').checked = false;
-      document.getElementById('stamp-lunas').classList.add('hidden');
+      document.getElementById('select-stamp').value = "";
+      document.getElementById('stamp-badge').classList.add('hidden');
 
       if (tipe === 'dashboard') {
         dashboard.classList.remove('hidden');
@@ -199,10 +280,13 @@
       dashboard.classList.add('hidden');
       editor.classList.remove('hidden');
 
+      if (tipe === 'jual-beli-tanah') renderJualBeliTanah(konten);
       if (tipe === 'invoice') renderInvoice(konten);
       if (tipe === 'kwitansi') renderKwitansi(konten);
       if (tipe === 'slip-gaji') renderSlipGaji(konten);
+      if (tipe === 'jual-beli-kendaraan') renderJualBeliKendaraan(konten);
       if (tipe === 'sewa-kos') renderSewaKos(konten);
+      if (tipe === 'surat-pernyataan') renderSuratPernyataan(konten);
       if (tipe === 'surat-jalan') renderSuratJalan(konten);
       if (tipe === 'surat-kuasa') renderSuratKuasa(konten);
       if (tipe === 'lamaran-kerja') renderLamaranKerja(konten);
@@ -210,7 +294,7 @@
       if (tipe === 'surat-undangan') renderUndangan(konten);
     }
 
-    // FITUR UPLOAD LOGO
+    // UPLOAD LOGO
     function uploadLogo(event) {
       const file = event.target.files[0];
       if (file) {
@@ -225,16 +309,26 @@
       }
     }
 
-    function toggleStamp(isChecked) {
-      const stamp = document.getElementById('stamp-lunas');
-      if (isChecked) {
-        stamp.classList.remove('hidden');
-      } else {
+    // PILIHAN STEMPEL CAP
+    function gantiStempel(val) {
+      const stamp = document.getElementById('stamp-badge');
+      if (!val) {
         stamp.classList.add('hidden');
+        return;
+      }
+      stamp.classList.remove('hidden', 'border-red-500', 'text-red-600', 'border-blue-500', 'text-blue-600', 'border-emerald-500', 'text-emerald-600');
+      stamp.textContent = val;
+
+      if (val === 'LUNAS') {
+        stamp.classList.add('border-red-500', 'text-red-600');
+      } else if (val === 'ASLI') {
+        stamp.classList.add('border-blue-500', 'text-blue-600');
+      } else if (val === 'DISETUJUI') {
+        stamp.classList.add('border-emerald-500', 'text-emerald-600');
       }
     }
 
-    // FUNGSI TERBILANG ANGKA KE TEKS BAHASA INDONESIA
+    // TERBILANG ANGKA
     function angkaKeTerbilang(nilai) {
       const bilangan = ["", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas"];
       let angka = Math.floor(Math.abs(Number(nilai)));
@@ -256,7 +350,285 @@
       return (proses(angka).trim() + " Rupiah").replace(/\s+/g, ' ');
     }
 
-    // 1. INVOICE
+    // CANVAS DIGITAL SIGNATURE
+    let canvas, ctx, isDrawing = false;
+
+    function initCanvas() {
+      canvas = document.getElementById('canvas-ttd');
+      ctx = canvas.getContext('2d');
+      ctx.lineWidth = 2.5;
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = '#1e293b';
+
+      const getPos = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        return {
+          x: (clientX - rect.left) * (canvas.width / rect.width),
+          y: (clientY - rect.top) * (canvas.height / rect.height)
+        };
+      };
+
+      const start = (e) => {
+        isDrawing = true;
+        const pos = getPos(e);
+        ctx.beginPath();
+        ctx.moveTo(pos.x, pos.y);
+        e.preventDefault();
+      };
+
+      const draw = (e) => {
+        if (!isDrawing) return;
+        const pos = getPos(e);
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+        e.preventDefault();
+      };
+
+      const stop = () => { isDrawing = false; };
+
+      canvas.addEventListener('mousedown', start);
+      canvas.addEventListener('mousemove', draw);
+      window.addEventListener('mouseup', stop);
+
+      canvas.addEventListener('touchstart', start, { passive: false });
+      canvas.addEventListener('touchmove', draw, { passive: false });
+      window.addEventListener('touchend', stop);
+    }
+
+    function bukaModalTTD() {
+      document.getElementById('modal-ttd').classList.remove('hidden');
+      if (!canvas) initCanvas();
+      bersihkanTTD();
+    }
+
+    function tutupModalTTD() {
+      document.getElementById('modal-ttd').classList.add('hidden');
+    }
+
+    function bersihkanTTD() {
+      if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function simpanTTD() {
+      tandaTanganDataURL = canvas.toDataURL('image/png');
+      const slotTTD = document.querySelectorAll('.slot-ttd');
+      slotTTD.forEach(slot => {
+        slot.innerHTML = `<img src="${tandaTanganDataURL}" class="h-14 mx-auto object-contain pointer-events-none mb-1">`;
+      });
+      tutupModalTTD();
+    }
+
+    // ==========================================
+    // TEMPLATE GENERATOR
+    // ==========================================
+
+    // 1. SURAT JUAL BELI TANAH NON-SERTIFIKAT (GIRIK / LETTER C) - BARU!
+    function renderJualBeliTanah(el) {
+      el.innerHTML = `
+        <div class="text-center border-b pb-4 mb-6">
+          <h2 class="text-xl font-bold uppercase tracking-wide text-slate-900">SURAT PERJANJIAN JUAL BELI TANAH</h2>
+          <p class="text-xs text-slate-500 mt-0.5">(Tanpa Sertifikat / Hak Milik Adat / Girik / Letter C / Petok D)</p>
+        </div>
+
+        <div class="space-y-4">
+          <p>Pada hari ini, tanggal <input type="text" placeholder="14 September 2026" class="border-b border-dashed border-slate-300 outline-none font-medium">, kami yang bertanda tangan di bawah ini:</p>
+
+          <div class="pl-4 space-y-1">
+            <p class="text-xs font-bold text-slate-700 uppercase tracking-wider">I. PIHAK PERTAMA (PENJUAL):</p>
+            <div class="flex"><span class="w-32 text-slate-500">Nama Lengkap</span>: <input type="text" placeholder="Nama Penjual" class="outline-none flex-1 font-medium border-b border-dashed border-slate-300"></div>
+            <div class="flex"><span class="w-32 text-slate-500">NIK / No. KTP</span>: <input type="text" placeholder="Nomor KTP Penjual" class="outline-none flex-1 border-b border-dashed border-slate-300"></div>
+            <div class="flex"><span class="w-32 text-slate-500">Pekerjaan</span>: <input type="text" placeholder="Pekerjaan Penjual" class="outline-none flex-1 border-b border-dashed border-slate-300"></div>
+            <div class="flex"><span class="w-32 text-slate-500">Alamat Sesuai KTP</span>: <input type="text" placeholder="Alamat Lengkap Penjual" class="outline-none flex-1 border-b border-dashed border-slate-300"></div>
+          </div>
+
+          <div class="pl-4 space-y-1 pt-1">
+            <p class="text-xs font-bold text-slate-700 uppercase tracking-wider">II. PIHAK KEDUA (PEMBELI):</p>
+            <div class="flex"><span class="w-32 text-slate-500">Nama Lengkap</span>: <input type="text" placeholder="Nama Pembeli" class="outline-none flex-1 font-medium border-b border-dashed border-slate-300"></div>
+            <div class="flex"><span class="w-32 text-slate-500">NIK / No. KTP</span>: <input type="text" placeholder="Nomor KTP Pembeli" class="outline-none flex-1 border-b border-dashed border-slate-300"></div>
+            <div class="flex"><span class="w-32 text-slate-500">Pekerjaan</span>: <input type="text" placeholder="Pekerjaan Pembeli" class="outline-none flex-1 border-b border-dashed border-slate-300"></div>
+            <div class="flex"><span class="w-32 text-slate-500">Alamat Sesuai KTP</span>: <input type="text" placeholder="Alamat Lengkap Pembeli" class="outline-none flex-1 border-b border-dashed border-slate-300"></div>
+          </div>
+
+          <p class="pt-2">Pihak Pertama dengan ini menjual dan menyerahkan kepada Pihak Kedua sebidang tanah milik adat yang belum bersertifikat dengan rincian data sebagai berikut:</p>
+
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2 text-xs">
+            <div class="grid grid-cols-2 gap-3">
+              <div class="flex"><span class="w-32 text-slate-500">Bukti Alas Hak:</span> <input type="text" placeholder="Girik / Letter C / Petok D No. ..." class="outline-none flex-1 font-medium bg-transparent border-b border-slate-300"></div>
+              <div class="flex"><span class="w-28 text-slate-500">No. SPPT PBB:</span> <input type="text" placeholder="Nomor Objek Pajak (NOP)" class="outline-none flex-1 bg-transparent border-b border-slate-300"></div>
+              <div class="flex"><span class="w-32 text-slate-500">Luas Tanah:</span> <input type="text" placeholder="... m² (meter persegi)" class="outline-none flex-1 font-medium bg-transparent border-b border-slate-300"></div>
+              <div class="flex"><span class="w-28 text-slate-500">Status Penggunaan:</span> <input type="text" placeholder="Tanah Darat / Kebun / Sawah" class="outline-none flex-1 bg-transparent border-b border-slate-300"></div>
+            </div>
+            <div class="flex pt-1"><span class="w-32 text-slate-500">Lokasi / Alamat Tanah:</span> <input type="text" placeholder="Kp./Jalan, RT/RW, Desa/Kelurahan, Kecamatan, Kabupaten/Kota" class="outline-none flex-1 bg-transparent border-b border-slate-300"></div>
+
+            <!-- Batas-batas Tanah Wajib -->
+            <div class="pt-2 border-t border-slate-200">
+              <p class="font-bold text-slate-700 mb-1.5">BATAS-BATAS BIDANG TANAH (SEMPADAN):</p>
+              <div class="grid grid-cols-2 gap-2">
+                <div class="flex"><span class="w-24 text-slate-500">Sebelah Utara:</span> <input type="text" placeholder="Berbatasan dengan tanah Bpk/Ibu ..." class="outline-none flex-1 bg-transparent border-b border-slate-300"></div>
+                <div class="flex"><span class="w-24 text-slate-500">Sebelah Timur:</span> <input type="text" placeholder="Berbatasan dengan jalan / saluran air" class="outline-none flex-1 bg-transparent border-b border-slate-300"></div>
+                <div class="flex"><span class="w-24 text-slate-500">Sebelah Selatan:</span> <input type="text" placeholder="Berbatasan dengan tanah Bpk/Ibu ..." class="outline-none flex-1 bg-transparent border-b border-slate-300"></div>
+                <div class="flex"><span class="w-24 text-slate-500">Sebelah Barat:</span> <input type="text" placeholder="Berbatasan dengan tanah Bpk/Ibu ..." class="outline-none flex-1 bg-transparent border-b border-slate-300"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-1.5 text-xs text-slate-700 pl-2">
+            <p><strong>Pasal 1 (Harga & Pembayaran):</strong> Tanah tersebut disepakati dijual dengan total harga sebesar <strong>Rp <input type="number" placeholder="0" class="border-b border-dashed border-slate-400 font-bold outline-none text-slate-900 w-36"></strong> dan telah dibayarkan secara lunas.</p>
+            <p><strong>Pasal 2 (Jaminan Penjual):</strong> Pihak Pertama menjamin sepenuhnya bahwa tanah tersebut adalah hak milik sahnya, tidak sedang dalam sengketa, tidak dijadikan agunan/pinjaman kepada pihak lain, serta bebas dari tuntutan ahli waris mana pun.</p>
+            <p><strong>Pasal 3 (Peralihan Hak & Sertifikasi):</strong> Sejak ditandatanganinya surat ini, kepemilikan dan hak penguasaan fisik tanah beralih sepenuhnya ke Pihak Kedua. Pihak Pertama bersedia membantu memberikan keterangan dan tanda tangan untuk keperluan permohonan sertifikat hak milik (SHM) ke Badan Pertanahan Nasional (BPN).</p>
+          </div>
+
+          <!-- Tanda Tangan Pihak Utama -->
+          <div class="grid grid-cols-2 gap-4 text-center pt-6">
+            <div>
+              <p class="text-xs text-slate-500 mb-2">Pihak Kedua (Pembeli),</p>
+              <div class="slot-ttd h-16 flex items-end justify-center"></div>
+              <p class="border-t border-slate-400 mx-8 pt-1 font-medium text-xs">( ........................................ )</p>
+            </div>
+            <div>
+              <p class="text-xs text-slate-500 mb-1">Pihak Pertama (Penjual),</p>
+              <span class="text-[9px] text-slate-400 border border-slate-300 px-1.5 py-0.5 inline-block mb-1">Materai 10.000</span>
+              <div class="slot-ttd h-12 flex items-end justify-center"></div>
+              <p class="border-t border-slate-400 mx-8 pt-1 font-medium text-xs">( ........................................ )</p>
+            </div>
+          </div>
+
+          <!-- Kolom Saksi-Saksi & Mengetahui Desa -->
+          <div class="border-t pt-4 mt-6">
+            <p class="text-center font-bold text-xs uppercase text-slate-700 mb-4">SAKSI - SAKSI & MENGETAHUI:</p>
+            <div class="grid grid-cols-4 gap-2 text-center text-xs">
+              <div>
+                <p class="text-slate-500 mb-12">Saksi Batas / Keluarga,</p>
+                <p class="border-t border-slate-300 mx-2 pt-1">( .................... )</p>
+              </div>
+              <div>
+                <p class="text-slate-500 mb-12">Saksi Batas / Tokoh Warga,</p>
+                <p class="border-t border-slate-300 mx-2 pt-1">( .................... )</p>
+              </div>
+              <div>
+                <p class="text-slate-500 mb-12">Ketua RT / RW Setempat,</p>
+                <p class="border-t border-slate-300 mx-2 pt-1">( .................... )</p>
+              </div>
+              <div>
+                <p class="text-slate-500 mb-12">Kepala Desa / Lurah,</p>
+                <p class="border-t border-slate-300 mx-2 pt-1">( .................... )</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 2. JUAL BELI KENDARAAN
+    function renderJualBeliKendaraan(el) {
+      el.innerHTML = `
+        <div class="text-center border-b pb-4 mb-6">
+          <h2 class="text-xl font-bold uppercase tracking-wide text-slate-900">SURAT PERJANJIAN JUAL BELI KENDARAAN</h2>
+          <p class="text-xs text-slate-500 mt-1">Sepeda Motor / Mobil Bekas</p>
+        </div>
+
+        <div class="space-y-4">
+          <p>Pada hari ini, tanggal <input type="text" placeholder="14 September 2026" class="border-b border-dashed border-slate-300 outline-none font-medium">, telah disepakati transaksi jual beli kendaraan antara:</p>
+
+          <div class="pl-4 space-y-1">
+            <div class="flex"><span class="w-36 text-slate-500">Pihak I (Penjual)</span>: <input type="text" placeholder="Nama Pemilik Lama" class="outline-none flex-1 font-medium border-b border-dashed border-slate-300"></div>
+            <div class="flex"><span class="w-36 text-slate-500">NIK / No. KTP</span>: <input type="text" placeholder="Nomor KTP Penjual" class="outline-none flex-1 border-b border-dashed border-slate-300"></div>
+            <div class="flex"><span class="w-36 text-slate-500">Alamat</span>: <input type="text" placeholder="Alamat Penjual" class="outline-none flex-1 border-b border-dashed border-slate-300"></div>
+          </div>
+
+          <div class="pl-4 space-y-1">
+            <div class="flex"><span class="w-36 text-slate-500">Pihak II (Pembeli)</span>: <input type="text" placeholder="Nama Pembeli" class="outline-none flex-1 font-medium border-b border-dashed border-slate-300"></div>
+            <div class="flex"><span class="w-36 text-slate-500">NIK / No. KTP</span>: <input type="text" placeholder="Nomor KTP Pembeli" class="outline-none flex-1 border-b border-dashed border-slate-300"></div>
+            <div class="flex"><span class="w-36 text-slate-500">Alamat</span>: <input type="text" placeholder="Alamat Pembeli" class="outline-none flex-1 border-b border-dashed border-slate-300"></div>
+          </div>
+
+          <p class="pt-2">Pihak I setuju menjual kepada Pihak II satu unit kendaraan dengan data sebagai berikut:</p>
+
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 grid grid-cols-2 gap-3 text-xs">
+            <div class="flex"><span class="w-28 text-slate-500">Merk / Tipe:</span> <input type="text" placeholder="Honda Vario 160 / Toyota Avanza" class="outline-none flex-1 font-medium bg-transparent border-b border-slate-300"></div>
+            <div class="flex"><span class="w-28 text-slate-500">Tahun Pembuatan:</span> <input type="text" placeholder="2023" class="outline-none flex-1 bg-transparent border-b border-slate-300"></div>
+            <div class="flex"><span class="w-28 text-slate-500">Nomor Polisi:</span> <input type="text" placeholder="F 1234 ABC" class="outline-none flex-1 font-mono font-bold bg-transparent border-b border-slate-300"></div>
+            <div class="flex"><span class="w-28 text-slate-500">Warna Kendaraan:</span> <input type="text" placeholder="Hitam Metalik" class="outline-none flex-1 bg-transparent border-b border-slate-300"></div>
+            <div class="flex"><span class="w-28 text-slate-500">Nomor Rangka:</span> <input type="text" placeholder="MH1xxxxxxxxxxx" class="outline-none flex-1 font-mono bg-transparent border-b border-slate-300"></div>
+            <div class="flex"><span class="w-28 text-slate-500">Nomor Mesin:</span> <input type="text" placeholder="Jxxxxxxxxx" class="outline-none flex-1 font-mono bg-transparent border-b border-slate-300"></div>
+            <div class="flex col-span-2"><span class="w-28 text-slate-500">No. BPKB:</span> <input type="text" placeholder="Nomor Buku BPKB" class="outline-none flex-1 bg-transparent border-b border-slate-300"></div>
+          </div>
+
+          <div class="pl-4 space-y-1.5 pt-2 text-xs">
+            <p>1. Kendaraan tersebut dijual dengan harga sepakat <strong>Rp <input type="number" placeholder="0" class="w-36 border-b border-dashed border-slate-400 font-bold outline-none"></strong>.</p>
+            <p>2. Pihak II telah memeriksa kondisi fisik mesin dan menerima kendaraan dalam kondisi apa adanya saat transaksi.</p>
+            <p>3. Seluruh dokumen asli kendaraan (STNK & BPKB) diserahkan bersamaan dengan ditandatanganinya perjanjian ini.</p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4 text-center pt-8">
+            <div>
+              <p class="text-xs text-slate-500 mb-2">Pihak II (Pembeli),</p>
+              <div class="slot-ttd h-16 flex items-end justify-center"></div>
+              <p class="border-t border-slate-400 mx-8 pt-1 font-medium">( .................... )</p>
+            </div>
+            <div>
+              <p class="text-xs text-slate-500 mb-1">Pihak I (Penjual),</p>
+              <span class="text-[9px] text-slate-400 border border-slate-300 px-1.5 py-0.5 inline-block mb-1">Materai 10.000</span>
+              <div class="slot-ttd h-12 flex items-end justify-center"></div>
+              <p class="border-t border-slate-400 mx-8 pt-1 font-medium">( .................... )</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 3. SURAT PERNYATAAN BERSAMA
+    function renderSuratPernyataan(el) {
+      el.innerHTML = `
+        <div class="text-center border-b pb-4 mb-6">
+          <h2 class="text-xl font-bold uppercase tracking-wide text-slate-900">SURAT PERNYATAAN BERSAMA</h2>
+        </div>
+
+        <div class="space-y-4">
+          <p>Kami yang bertanda tangan di bawah ini:</p>
+
+          <div class="pl-4 space-y-1">
+            <p class="text-xs font-bold text-slate-600 uppercase">PIHAK PERTAMA:</p>
+            <div class="flex"><span class="w-32 text-slate-500">Nama</span>: <input type="text" placeholder="Nama Pihak Pertama" class="outline-none flex-1 font-medium border-b border-dashed border-slate-300"></div>
+            <div class="flex"><span class="w-32 text-slate-500">NIK / KTP</span>: <input type="text" placeholder="Nomor KTP" class="outline-none flex-1 border-b border-dashed border-slate-300"></div>
+            <div class="flex"><span class="w-32 text-slate-500">Alamat</span>: <input type="text" placeholder="Alamat Pihak Pertama" class="outline-none flex-1 border-b border-dashed border-slate-300"></div>
+          </div>
+
+          <div class="pl-4 space-y-1">
+            <p class="text-xs font-bold text-slate-600 uppercase">PIHAK KEDUA:</p>
+            <div class="flex"><span class="w-32 text-slate-500">Nama</span>: <input type="text" placeholder="Nama Pihak Kedua" class="outline-none flex-1 font-medium border-b border-dashed border-slate-300"></div>
+            <div class="flex"><span class="w-32 text-slate-500">NIK / KTP</span>: <input type="text" placeholder="Nomor KTP" class="outline-none flex-1 border-b border-dashed border-slate-300"></div>
+            <div class="flex"><span class="w-32 text-slate-500">Alamat</span>: <input type="text" placeholder="Alamat Pihak Kedua" class="outline-none flex-1 border-b border-dashed border-slate-300"></div>
+          </div>
+
+          <p class="pt-2">Melalui surat ini, kedua belah pihak secara sadar dan sukarela telah menyatakan kesepakatan mengenai hal-hal berikut:</p>
+
+          <div class="space-y-2">
+            <textarea rows="4" class="w-full border border-slate-300 rounded-lg p-3 outline-none resize-none text-slate-700" placeholder="Tuliskan butir pernyataan kesepakatan bersama secara jelas, misalnya: Bahwa kedua belah pihak telah menyelesaikan perselisihan secara kekeluargaan/damai dan tidak ada tuntutan hukum di kemudian hari..."></textarea>
+          </div>
+
+          <p class="text-xs text-slate-500 pt-2">Demikian surat pernyataan ini kami buat dengan sebenarnya tanpa paksaan dari pihak mana pun dan memiliki kekuatan hukum yang sah.</p>
+
+          <div class="grid grid-cols-2 gap-4 text-center pt-8">
+            <div>
+              <p class="text-xs text-slate-500 mb-2">Pihak Kedua,</p>
+              <div class="slot-ttd h-16 flex items-end justify-center"></div>
+              <p class="border-t border-slate-400 mx-8 pt-1 font-medium">( .................... )</p>
+            </div>
+            <div>
+              <p class="text-xs text-slate-500 mb-1">Pihak Pertama,</p>
+              <span class="text-[9px] text-slate-400 border border-slate-300 px-1.5 py-0.5 inline-block mb-1">Materai</span>
+              <div class="slot-ttd h-12 flex items-end justify-center"></div>
+              <p class="border-t border-slate-400 mx-8 pt-1 font-medium">( .................... )</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 4. INVOICE
     function renderInvoice(el) {
       el.innerHTML = `
         <div class="flex justify-between items-start border-b pb-4 mb-6">
@@ -319,7 +691,7 @@
       `;
     }
 
-    // 2. KWITANSI
+    // 5. KWITANSI
     function renderKwitansi(el) {
       el.innerHTML = `
         <div class="border-2 border-slate-700 p-6 rounded-lg space-y-4">
@@ -344,7 +716,7 @@
             </div>
             <div class="flex items-center">
               <span class="w-40 text-xs font-bold text-slate-600">Untuk Pembayaran :</span>
-              <input type="text" placeholder="Keterangan pembayaran barang / sewa / jasa" class="flex-1 outline-none border-b border-dashed border-slate-400">
+              <input type="text" placeholder="Keterangan pembayaran barang / sewa / tanah / jasa" class="flex-1 outline-none border-b border-dashed border-slate-400">
             </div>
           </div>
 
@@ -353,7 +725,8 @@
               Rp <input type="number" id="kwitansi-angka" oninput="updateTerbilangKwitansi(this.value)" placeholder="0" class="bg-transparent outline-none w-36 font-bold">
             </div>
             <div class="text-center w-48">
-              <input type="text" placeholder="Kota, Tanggal" class="text-center text-xs outline-none w-full mb-12 border-b border-dashed border-slate-300">
+              <input type="text" placeholder="Kota, Tanggal" class="text-center text-xs outline-none w-full mb-4 border-b border-dashed border-slate-300">
+              <div class="slot-ttd h-12 flex items-end justify-center"></div>
               <p class="border-t border-slate-400 pt-1 font-medium">( ........................................ )</p>
             </div>
           </div>
@@ -361,7 +734,7 @@
       `;
     }
 
-    // 3. SLIP GAJI KARYAWAN
+    // 6. SLIP GAJI
     function renderSlipGaji(el) {
       el.innerHTML = `
         <div class="border-b pb-4 mb-4 text-center">
@@ -382,68 +755,49 @@
         </div>
 
         <div class="grid grid-cols-2 gap-6 mb-6">
-          <!-- Penerimaan -->
           <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
             <h4 class="font-bold text-xs uppercase text-slate-600 mb-3 border-b pb-1">Penerimaan</h4>
             <div class="space-y-2">
-              <div class="flex justify-between items-center">
-                <span>Gaji Pokok</span>
-                <input type="number" id="gaji-pokok" value="0" oninput="hitungGaji()" class="w-28 text-right outline-none border-b bg-transparent">
-              </div>
-              <div class="flex justify-between items-center">
-                <span>Tunjangan / Uang Makan</span>
-                <input type="number" id="gaji-tunjangan" value="0" oninput="hitungGaji()" class="w-28 text-right outline-none border-b bg-transparent">
-              </div>
-              <div class="flex justify-between items-center">
-                <span>Lembur / Bonus</span>
-                <input type="number" id="gaji-bonus" value="0" oninput="hitungGaji()" class="w-28 text-right outline-none border-b bg-transparent">
-              </div>
+              <div class="flex justify-between items-center"><span>Gaji Pokok</span><input type="number" id="gaji-pokok" value="0" oninput="hitungGaji()" class="w-28 text-right outline-none border-b bg-transparent"></div>
+              <div class="flex justify-between items-center"><span>Tunjangan / Makan</span><input type="number" id="gaji-tunjangan" value="0" oninput="hitungGaji()" class="w-28 text-right outline-none border-b bg-transparent"></div>
+              <div class="flex justify-between items-center"><span>Lembur / Bonus</span><input type="number" id="gaji-bonus" value="0" oninput="hitungGaji()" class="w-28 text-right outline-none border-b bg-transparent"></div>
             </div>
           </div>
 
-          <!-- Potongan -->
           <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
             <h4 class="font-bold text-xs uppercase text-slate-600 mb-3 border-b pb-1">Potongan</h4>
             <div class="space-y-2">
-              <div class="flex justify-between items-center">
-                <span>BPJS / Asuransi</span>
-                <input type="number" id="potongan-bpjs" value="0" oninput="hitungGaji()" class="w-28 text-right outline-none border-b bg-transparent">
-              </div>
-              <div class="flex justify-between items-center">
-                <span>Kasbon / Pinjaman</span>
-                <input type="number" id="potongan-kasbon" value="0" oninput="hitungGaji()" class="w-28 text-right outline-none border-b bg-transparent">
-              </div>
-              <div class="flex justify-between items-center">
-                <span>Keterlambatan / Lainnya</span>
-                <input type="number" id="potongan-lain" value="0" oninput="hitungGaji()" class="w-28 text-right outline-none border-b bg-transparent">
-              </div>
+              <div class="flex justify-between items-center"><span>BPJS / Asuransi</span><input type="number" id="potongan-bpjs" value="0" oninput="hitungGaji()" class="w-28 text-right outline-none border-b bg-transparent"></div>
+              <div class="flex justify-between items-center"><span>Kasbon / Pinjaman</span><input type="number" id="potongan-kasbon" value="0" oninput="hitungGaji()" class="w-28 text-right outline-none border-b bg-transparent"></div>
+              <div class="flex justify-between items-center"><span>Keterlambatan</span><input type="number" id="potongan-lain" value="0" oninput="hitungGaji()" class="w-28 text-right outline-none border-b bg-transparent"></div>
             </div>
           </div>
         </div>
 
-        <!-- Total Diterima -->
         <div class="bg-blue-50 border border-blue-200 p-4 rounded-lg flex justify-between items-center mb-8">
           <div>
             <span class="font-bold text-slate-900">Total Gaji Bersih (Take Home Pay)</span>
-            <p class="text-xs text-slate-500">Total penerimaan dikurangi potongan</p>
+            <p class="text-xs text-slate-500">Penerimaan dikurangi potongan</p>
           </div>
           <span id="gaji-total" class="font-extrabold text-xl text-blue-700">Rp 0</span>
         </div>
 
-        <div class="grid grid-cols-2 gap-4 text-center mt-12">
+        <div class="grid grid-cols-2 gap-4 text-center mt-8">
           <div>
-            <p class="text-xs text-slate-500 mb-16">Penerima,</p>
+            <p class="text-xs text-slate-500 mb-2">Penerima,</p>
+            <div class="slot-ttd h-12 flex items-end justify-center"></div>
             <p class="border-t border-slate-400 mx-8 pt-1 font-medium">( Karyawan )</p>
           </div>
           <div>
-            <p class="text-xs text-slate-500 mb-16">Bagian Keuangan,</p>
+            <p class="text-xs text-slate-500 mb-2">Bagian Keuangan,</p>
+            <div class="slot-ttd h-12 flex items-end justify-center"></div>
             <p class="border-t border-slate-400 mx-8 pt-1 font-medium">( .................... )</p>
           </div>
         </div>
       `;
     }
 
-    // 4. SURAT PERJANJIAN SEWA KOS / RUMAH
+    // 7. SEWA KOS / RUMAH
     function renderSewaKos(el) {
       el.innerHTML = `
         <div class="text-center border-b pb-4 mb-6">
@@ -453,36 +807,34 @@
 
         <div class="space-y-4">
           <p>Pada hari ini, kami yang bertanda tangan di bawah ini:</p>
-          
           <div class="pl-4 space-y-1">
-            <div class="flex"><span class="w-36 text-slate-500">Pihak Pertama (Pemilik)</span>: <input type="text" placeholder="Nama Pemilik" class="outline-none flex-1 font-medium border-b border-dashed border-slate-300"></div>
+            <div class="flex"><span class="w-36 text-slate-500">Pihak I (Pemilik)</span>: <input type="text" placeholder="Nama Pemilik" class="outline-none flex-1 font-medium border-b border-dashed border-slate-300"></div>
             <div class="flex"><span class="w-36 text-slate-500">No. KTP / HP</span>: <input type="text" placeholder="08xxxxxxxxxx" class="outline-none flex-1 border-b border-dashed border-slate-300"></div>
           </div>
 
           <div class="pl-4 space-y-1">
-            <div class="flex"><span class="w-36 text-slate-500">Pihak Kedua (Penyewa)</span>: <input type="text" placeholder="Nama Penyewa" class="outline-none flex-1 font-medium border-b border-dashed border-slate-300"></div>
+            <div class="flex"><span class="w-36 text-slate-500">Pihak II (Penyewa)</span>: <input type="text" placeholder="Nama Penyewa" class="outline-none flex-1 font-medium border-b border-dashed border-slate-300"></div>
             <div class="flex"><span class="w-36 text-slate-500">No. KTP / HP</span>: <input type="text" placeholder="08xxxxxxxxxx" class="outline-none flex-1 border-b border-dashed border-slate-300"></div>
           </div>
 
-          <p class="pt-2">Kedua belah pihak sepakat mengadakan perjanjian sewa dengan rincian sebagai berikut:</p>
-
+          <p class="pt-2">Kedua belah pihak sepakat mengadakan perjanjian sewa dengan rincian:</p>
           <div class="pl-4 space-y-2">
             <p>1. <strong>Objek Sewa:</strong> Kamar / Unit di alamat <input type="text" placeholder="Alamat lengkap properti" class="w-96 border-b border-dashed border-slate-300 outline-none"></p>
-            <p>2. <strong>Jangka Waktu:</strong> Selama <input type="text" placeholder="1 Tahun / 6 Bulan" class="w-32 border-b border-dashed border-slate-300 outline-none text-center"> terhitung mulai tanggal <input type="date" class="outline-none"> sampai <input type="date" class="outline-none">.</p>
-            <p>3. <strong>Biaya Sewa:</strong> Sebesar Rp <input type="number" placeholder="0" class="w-36 border-b border-dashed border-slate-300 outline-none font-medium"> dibayarkan secara tunai / transfer.</p>
-            <p>4. <strong>Uang Jaminan (Deposit):</strong> Sebesar Rp <input type="number" placeholder="0" class="w-36 border-b border-dashed border-slate-300 outline-none"> (dikembalikan setelah masa sewa berakhir jika tidak ada kerusakan).</p>
+            <p>2. <strong>Jangka Waktu:</strong> Selama <input type="text" placeholder="1 Tahun / 6 Bulan" class="w-32 border-b border-dashed border-slate-300 outline-none text-center"> terhitung dari <input type="date" class="outline-none"> sampai <input type="date" class="outline-none">.</p>
+            <p>3. <strong>Biaya Sewa:</strong> Sebesar Rp <input type="number" placeholder="0" class="w-36 border-b border-dashed border-slate-300 outline-none font-medium">.</p>
+            <p>4. <strong>Uang Jaminan (Deposit):</strong> Sebesar Rp <input type="number" placeholder="0" class="w-36 border-b border-dashed border-slate-300 outline-none">.</p>
           </div>
-
-          <p class="text-xs text-slate-500 pt-2">Demikian surat perjanjian ini dibuat rangkap dua tanpa paksaan dari pihak manapun untuk dipergunakan sebagaimana mestinya.</p>
 
           <div class="grid grid-cols-2 gap-4 text-center pt-8">
             <div>
-              <p class="text-xs text-slate-500 mb-16">Pihak Kedua (Penyewa),</p>
+              <p class="text-xs text-slate-500 mb-2">Pihak II (Penyewa),</p>
+              <div class="slot-ttd h-16 flex items-end justify-center"></div>
               <p class="border-t border-slate-400 mx-8 pt-1 font-medium">( .................... )</p>
             </div>
             <div>
-              <p class="text-xs text-slate-500 mb-12">Pihak Pertama (Pemilik),</p>
-              <span class="text-[10px] text-slate-400 border border-slate-300 px-2 py-1 inline-block mb-2">Materai</span>
+              <p class="text-xs text-slate-500 mb-1">Pihak I (Pemilik),</p>
+              <span class="text-[9px] text-slate-400 border border-slate-300 px-1.5 py-0.5 inline-block mb-1">Materai</span>
+              <div class="slot-ttd h-12 flex items-end justify-center"></div>
               <p class="border-t border-slate-400 mx-8 pt-1 font-medium">( .................... )</p>
             </div>
           </div>
@@ -490,7 +842,7 @@
       `;
     }
 
-    // 5. SURAT JALAN
+    // 8. SURAT JALAN
     function renderSuratJalan(el) {
       el.innerHTML = `
         <div class="text-center border-b pb-4 mb-6">
@@ -505,14 +857,8 @@
             <textarea placeholder="Alamat Pengiriman Lengkap" rows="2" class="w-full text-slate-600 outline-none border-b border-dashed border-slate-300 resize-none"></textarea>
           </div>
           <div class="text-right space-y-1">
-            <div>
-              <span class="text-xs text-slate-500">No. Dokumen: </span>
-              <input type="text" value="SJ-${Date.now().toString().slice(-5)}" class="text-right font-mono font-medium outline-none">
-            </div>
-            <div>
-              <span class="text-xs text-slate-500">Tanggal: </span>
-              <input type="date" class="text-right outline-none font-medium">
-            </div>
+            <div><span class="text-xs text-slate-500">No. Dokumen: </span><input type="text" value="SJ-${Date.now().toString().slice(-5)}" class="text-right font-mono font-medium outline-none"></div>
+            <div><span class="text-xs text-slate-500">Tanggal: </span><input type="date" class="text-right outline-none font-medium"></div>
           </div>
         </div>
 
@@ -529,194 +875,137 @@
             <tr class="border-b border-slate-100">
               <td class="py-2 text-center">1</td>
               <td class="py-2"><input type="text" placeholder="Deskripsi barang" class="w-full outline-none"></td>
-              <td class="py-2 text-right"><input type="text" placeholder="1 Dus / Pcs" class="w-full text-right outline-none"></td>
+              <td class="py-2 text-right"><input type="text" placeholder="1 Dus" class="w-full text-right outline-none"></td>
               <td class="py-2 pl-4"><input type="text" placeholder="Baik / Baru" class="w-full outline-none"></td>
             </tr>
           </tbody>
         </table>
 
-        <div class="grid grid-cols-3 gap-4 text-center mt-12 pt-4">
-          <div>
-            <p class="text-xs text-slate-500 mb-16">Penerima,</p>
-            <p class="border-t border-slate-400 mx-4 pt-1 font-medium">( .................... )</p>
-          </div>
-          <div>
-            <p class="text-xs text-slate-500 mb-16">Pengemudi / Kurir,</p>
-            <p class="border-t border-slate-400 mx-4 pt-1 font-medium">( .................... )</p>
-          </div>
-          <div>
-            <p class="text-xs text-slate-500 mb-16">Hormat Kami,</p>
-            <p class="border-t border-slate-400 mx-4 pt-1 font-medium">( .................... )</p>
-          </div>
+        <div class="grid grid-cols-3 gap-4 text-center mt-10">
+          <div><p class="text-xs text-slate-500 mb-2">Penerima,</p><div class="slot-ttd h-12 flex items-end justify-center"></div><p class="border-t border-slate-400 mx-4 pt-1 font-medium">( .................... )</p></div>
+          <div><p class="text-xs text-slate-500 mb-2">Pengemudi / Kurir,</p><div class="slot-ttd h-12 flex items-end justify-center"></div><p class="border-t border-slate-400 mx-4 pt-1 font-medium">( .................... )</p></div>
+          <div><p class="text-xs text-slate-500 mb-2">Hormat Kami,</p><div class="slot-ttd h-12 flex items-end justify-center"></div><p class="border-t border-slate-400 mx-4 pt-1 font-medium">( .................... )</p></div>
         </div>
       `;
     }
 
-    // 6. SURAT IZIN / SAKIT
-    function renderSuratIzin(el) {
-      el.innerHTML = `
-        <div class="space-y-5">
-          <div class="text-right">
-            <input type="text" placeholder="Kota, Tanggal Hari Ini" class="text-right outline-none font-medium border-b border-dashed border-slate-300">
-          </div>
-
-          <div>
-            <p>Hal: <span class="font-semibold">Permohonan Izin Tidak Masuk</span></p>
-            <p class="mt-4">Kepada Yth.</p>
-            <input type="text" placeholder="Bapak/Ibu Pimpinan / Wali Kelas" class="w-full font-medium outline-none border-b border-dashed border-slate-300">
-            <input type="text" placeholder="Nama Kantor / Nama Sekolah" class="w-full outline-none border-b border-dashed border-slate-300">
-          </div>
-
-          <p>Dengan hormat,</p>
-
-          <p>Saya yang bertanda tangan di bawah ini:</p>
-          <div class="pl-4 space-y-1">
-            <div class="flex"><span class="w-32 text-slate-500">Nama</span>: <input type="text" placeholder="Nama Lengkap" class="outline-none flex-1 font-medium ml-2"></div>
-            <div class="flex"><span class="w-32 text-slate-500">Jabatan / Kelas</span>: <input type="text" placeholder="Staff / Kelas X" class="outline-none flex-1 ml-2"></div>
-            <div class="flex"><span class="w-32 text-slate-500">Alamat / Kontak</span>: <input type="text" placeholder="No Telepon / WhatsApp" class="outline-none flex-1 ml-2"></div>
-          </div>
-
-          <p>
-            Bermaksud untuk mengajukan izin tidak dapat hadir bertugas / belajar pada tanggal 
-            <input type="text" placeholder="Hari & Tanggal" class="border-b border-dashed border-blue-500 outline-none px-1 inline-block"> 
-            dikarenakan 
-            <input type="text" placeholder="Sakit / Keperluan Keluarga Penting" class="border-b border-dashed border-blue-500 outline-none px-1 inline-block w-80">.
-          </p>
-
-          <p>Demikian surat permohonan izin ini saya sampaikan. Atas pengertian dan izin yang Bapak/Ibu berikan, saya ucapkan terima kasih.</p>
-
-          <div class="flex justify-end pt-10">
-            <div class="text-center w-56">
-              <p class="text-slate-600 mb-16">Hormat saya,</p>
-              <input type="text" placeholder="Nama Lengkap" class="text-center font-semibold outline-none border-t border-slate-400 w-full pt-1">
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    // 7. SURAT LAMARAN KERJA
-    function renderLamaranKerja(el) {
-      el.innerHTML = `
-        <div class="space-y-5">
-          <div class="text-right">
-            <input type="text" placeholder="Kota, Tanggal Hari Ini" class="text-right outline-none font-medium border-b border-dashed border-slate-300">
-          </div>
-
-          <div>
-            <p>Hal: <span class="font-semibold">Lamaran Pekerjaan</span></p>
-            <p class="mt-4">Kepada Yth.</p>
-            <input type="text" placeholder="HRD Manager / Pimpinan Perusahaan" class="w-full font-medium outline-none border-b border-dashed border-slate-300">
-            <input type="text" placeholder="Nama PT / Instansi Tujuan" class="w-full outline-none border-b border-dashed border-slate-300">
-            <input type="text" placeholder="Alamat Perusahaan" class="w-full text-slate-600 outline-none border-b border-dashed border-slate-300">
-          </div>
-
-          <p>Dengan hormat,</p>
-
-          <p>
-            Berdasarkan informasi lowongan pekerjaan yang saya peroleh, saya bermaksud untuk mengajukan diri guna bergabung di posisi
-            <input type="text" placeholder="Nama Posisi yang Dilamar" class="font-semibold outline-none border-b border-dashed border-blue-500 px-1 inline-block">.
-          </p>
-
-          <div class="space-y-1.5 pl-4">
-            <div class="flex"><span class="w-36 text-slate-500">Nama Lengkap</span>: <input type="text" placeholder="Nama Anda" class="outline-none flex-1 font-medium ml-2"></div>
-            <div class="flex"><span class="w-36 text-slate-500">Pendidikan Terakhir</span>: <input type="text" placeholder="Jurusan & Kampus/Sekolah" class="outline-none flex-1 ml-2"></div>
-            <div class="flex"><span class="w-36 text-slate-500">Nomor Kontak/WA</span>: <input type="text" placeholder="08xxxxxxxxxx" class="outline-none flex-1 ml-2"></div>
-            <div class="flex"><span class="w-36 text-slate-500">Email</span>: <input type="email" placeholder="emailanda@gmail.com" class="outline-none flex-1 ml-2"></div>
-          </div>
-
-          <p>Sebagai bahan pertimbangan, bersama surat ini saya lampirkan Curriculum Vitae (CV) dan dokumen pendukung lainnya.</p>
-          <p>Demikian permohonan ini saya sampaikan. Besar harapan saya untuk diberikan kesempatan sesi wawancara. Terima kasih.</p>
-
-          <div class="flex justify-end pt-8">
-            <div class="text-center w-56">
-              <p class="text-slate-600 mb-16">Hormat saya,</p>
-              <input type="text" placeholder="Nama Lengkap" class="text-center font-semibold outline-none border-t border-slate-400 w-full pt-1">
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    // 8. SURAT KUASA
+    // 9. SURAT KUASA
     function renderSuratKuasa(el) {
       el.innerHTML = `
-        <div class="text-center border-b pb-4 mb-6">
-          <h2 class="text-xl font-bold uppercase tracking-wide text-slate-900">SURAT KUASA</h2>
-        </div>
-
+        <div class="text-center border-b pb-4 mb-6"><h2 class="text-xl font-bold uppercase tracking-wide text-slate-900">SURAT KUASA</h2></div>
         <div class="space-y-4">
           <p>Saya yang bertanda tangan di bawah ini:</p>
           <div class="pl-4 space-y-1">
             <div class="flex"><span class="w-32 text-slate-500">Nama Lengkap</span>: <input type="text" placeholder="Nama Pemberi Kuasa" class="outline-none flex-1 font-medium ml-2 border-b border-dashed border-slate-300"></div>
             <div class="flex"><span class="w-32 text-slate-500">NIK / KTP</span>: <input type="text" placeholder="Nomor KTP" class="outline-none flex-1 ml-2 border-b border-dashed border-slate-300"></div>
           </div>
-
           <p class="pt-2">Dengan ini memberikan kuasa penuh kepada:</p>
           <div class="pl-4 space-y-1">
             <div class="flex"><span class="w-32 text-slate-500">Nama Lengkap</span>: <input type="text" placeholder="Nama Penerima Kuasa" class="outline-none flex-1 font-medium ml-2 border-b border-dashed border-slate-300"></div>
             <div class="flex"><span class="w-32 text-slate-500">NIK / KTP</span>: <input type="text" placeholder="Nomor KTP" class="outline-none flex-1 ml-2 border-b border-dashed border-slate-300"></div>
           </div>
-
           <div class="pt-2">
             <p class="font-semibold text-xs text-slate-600 mb-1 uppercase tracking-wider">UNTUK MELAKUKAN:</p>
-            <textarea rows="3" class="w-full outline-none border border-slate-200 p-2 rounded resize-none" placeholder="Tuliskan wewenang yang diberikan secara jelas, misalnya: Mengurus berkas administrasi / perbankan / pengambilan dokumen..."></textarea>
+            <textarea rows="3" class="w-full outline-none border border-slate-200 p-2 rounded resize-none" placeholder="Tuliskan wewenang yang diberikan secara jelas..."></textarea>
           </div>
+          <div class="grid grid-cols-2 gap-4 text-center pt-8">
+            <div><p class="text-xs text-slate-500 mb-2">Penerima Kuasa,</p><div class="slot-ttd h-16 flex items-end justify-center"></div><p class="border-t border-slate-400 mx-8 pt-1 font-medium">( .................... )</p></div>
+            <div><p class="text-xs text-slate-500 mb-1">Pemberi Kuasa,</p><span class="text-[9px] text-slate-400 border border-slate-300 px-1.5 py-0.5 inline-block mb-1">Materai</span><div class="slot-ttd h-12 flex items-end justify-center"></div><p class="border-t border-slate-400 mx-8 pt-1 font-medium">( .................... )</p></div>
+          </div>
+        </div>
+      `;
+    }
 
-          <div class="grid grid-cols-2 gap-4 text-center pt-10">
-            <div>
-              <p class="text-xs text-slate-500 mb-16">Penerima Kuasa,</p>
-              <p class="border-t border-slate-400 mx-8 pt-1 font-medium">( .................... )</p>
-            </div>
-            <div>
-              <p class="text-xs text-slate-500 mb-12">Pemberi Kuasa,</p>
-              <span class="text-[10px] text-slate-400 border border-slate-300 px-2 py-1 inline-block mb-2">Materai</span>
-              <p class="border-t border-slate-400 mx-8 pt-1 font-medium">( .................... )</p>
+    // 10. SURAT LAMARAN KERJA
+    function renderLamaranKerja(el) {
+      el.innerHTML = `
+        <div class="space-y-5">
+          <div class="text-right"><input type="text" placeholder="Kota, Tanggal Hari Ini" class="text-right outline-none font-medium border-b border-dashed border-slate-300"></div>
+          <div>
+            <p>Hal: <span class="font-semibold">Lamaran Pekerjaan</span></p>
+            <p class="mt-4">Kepada Yth.</p>
+            <input type="text" placeholder="HRD Manager / Pimpinan Perusahaan" class="w-full font-medium outline-none border-b border-dashed border-slate-300">
+            <input type="text" placeholder="Nama PT / Instansi Tujuan" class="w-full outline-none border-b border-dashed border-slate-300">
+          </div>
+          <p>Dengan hormat,</p>
+          <p>Berdasarkan informasi lowongan pekerjaan yang saya peroleh, saya bermaksud mengajukan diri guna bergabung di posisi <input type="text" placeholder="Nama Posisi yang Dilamar" class="font-semibold outline-none border-b border-dashed border-blue-500 px-1 inline-block">.</p>
+          <div class="space-y-1.5 pl-4">
+            <div class="flex"><span class="w-36 text-slate-500">Nama Lengkap</span>: <input type="text" placeholder="Nama Anda" class="outline-none flex-1 font-medium ml-2"></div>
+            <div class="flex"><span class="w-36 text-slate-500">Pendidikan Terakhir</span>: <input type="text" placeholder="Jurusan & Kampus/Sekolah" class="outline-none flex-1 ml-2"></div>
+            <div class="flex"><span class="w-36 text-slate-500">Nomor Kontak/WA</span>: <input type="text" placeholder="08xxxxxxxxxx" class="outline-none flex-1 ml-2"></div>
+          </div>
+          <p>Sebagai bahan pertimbangan, bersama surat ini saya lampirkan Curriculum Vitae (CV) dan berkas pendukung. Besar harapan saya untuk diberikan kesempatan wawancara. Terima kasih.</p>
+          <div class="flex justify-end pt-8">
+            <div class="text-center w-56">
+              <p class="text-slate-600 mb-2">Hormat saya,</p>
+              <div class="slot-ttd h-14 flex items-end justify-center"></div>
+              <input type="text" placeholder="Nama Lengkap Anda" class="text-center font-semibold outline-none border-t border-slate-400 w-full pt-1">
             </div>
           </div>
         </div>
       `;
     }
 
-    // 9. SURAT UNDANGAN
+    // 11. SURAT IZIN
+    function renderSuratIzin(el) {
+      el.innerHTML = `
+        <div class="space-y-5">
+          <div class="text-right"><input type="text" placeholder="Kota, Tanggal Hari Ini" class="text-right outline-none font-medium border-b border-dashed border-slate-300"></div>
+          <div>
+            <p>Hal: <span class="font-semibold">Permohonan Izin Tidak Masuk</span></p>
+            <p class="mt-4">Kepada Yth.</p>
+            <input type="text" placeholder="Bapak/Ibu Pimpinan / Wali Kelas" class="w-full font-medium outline-none border-b border-dashed border-slate-300">
+            <input type="text" placeholder="Nama Kantor / Nama Sekolah" class="w-full outline-none border-b border-dashed border-slate-300">
+          </div>
+          <p>Dengan hormat,</p>
+          <p>Saya yang bertanda tangan di bawah ini:</p>
+          <div class="pl-4 space-y-1">
+            <div class="flex"><span class="w-32 text-slate-500">Nama</span>: <input type="text" placeholder="Nama Lengkap" class="outline-none flex-1 font-medium ml-2"></div>
+            <div class="flex"><span class="w-32 text-slate-500">Jabatan / Kelas</span>: <input type="text" placeholder="Staff / Kelas X" class="outline-none flex-1 ml-2"></div>
+          </div>
+          <p>Bermaksud mengajukan izin tidak hadir bertugas / belajar pada tanggal <input type="text" placeholder="Hari & Tanggal" class="border-b border-dashed border-blue-500 outline-none px-1 inline-block"> dikarenakan <input type="text" placeholder="Sakit / Keperluan Penting" class="border-b border-dashed border-blue-500 outline-none px-1 inline-block w-80">.</p>
+          <div class="flex justify-end pt-8">
+            <div class="text-center w-56">
+              <p class="text-slate-600 mb-2">Hormat saya,</p>
+              <div class="slot-ttd h-14 flex items-end justify-center"></div>
+              <input type="text" placeholder="Nama Lengkap" class="text-center font-semibold outline-none border-t border-slate-400 w-full pt-1">
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 12. SURAT UNDANGAN
     function renderUndangan(el) {
       el.innerHTML = `
         <div class="text-center border-b pb-4 mb-6">
           <input type="text" placeholder="KOP SURAT / INSTANSI / ORGANISASI" class="text-center font-bold text-lg w-full outline-none border-b border-dashed border-slate-300">
           <input type="text" placeholder="Alamat & Kontak Penyelenggara" class="text-center text-xs text-slate-500 w-full outline-none mt-1">
         </div>
-
         <div class="flex justify-between mb-6">
           <div>
             <p><span class="inline-block w-16 text-slate-500">Nomor</span>: <input type="text" placeholder="001/UND/2026" class="outline-none font-mono"></p>
             <p><span class="inline-block w-16 text-slate-500">Perihal</span>: <input type="text" placeholder="Undangan Rapat / Acara" class="outline-none font-medium"></p>
           </div>
-          <div class="text-right">
-            <input type="text" placeholder="Kota, Tanggal" class="text-right outline-none">
-          </div>
+          <div class="text-right"><input type="text" placeholder="Kota, Tanggal" class="text-right outline-none"></div>
         </div>
-
         <div class="mb-6">
           <p>Kepada Yth,</p>
           <input type="text" placeholder="Bapak/Ibu/Saudara Nama Penerima" class="font-medium outline-none border-b border-dashed border-slate-300 w-full max-w-sm">
           <p class="text-slate-500 text-xs mt-1">Di tempat</p>
         </div>
-
         <div class="space-y-4 mb-6">
           <p>Dengan hormat, sehubungan dengan agenda kegiatan yang akan dilaksanakan, kami mengundang Anda untuk hadir pada:</p>
-
           <div class="pl-6 space-y-1">
             <p><span class="inline-block w-24 text-slate-500">Hari, Tanggal</span>: <input type="text" placeholder="Senin, 14 September 2026" class="outline-none font-medium w-80"></p>
             <p><span class="inline-block w-24 text-slate-500">Waktu</span>: <input type="text" placeholder="09:00 WIB - Selesai" class="outline-none font-medium w-80"></p>
             <p><span class="inline-block w-24 text-slate-500">Tempat</span>: <input type="text" placeholder="Ruang Rapat / Aula Pertemuan" class="outline-none font-medium w-80"></p>
           </div>
-
-          <p>Demikian undangan ini kami sampaikan. Atas perhatian dan partisipasi Bapak/Ibu, kami ucapkan terima kasih.</p>
         </div>
-
         <div class="flex justify-end mt-12 text-center">
           <div>
-            <p class="text-xs text-slate-500 mb-16">Hormat Kami,</p>
+            <p class="text-xs text-slate-500 mb-2">Hormat Kami,</p>
+            <div class="slot-ttd h-14 flex items-end justify-center"></div>
             <p class="border-t border-slate-400 px-6 pt-1 font-medium">( ........................................ )</p>
           </div>
         </div>
