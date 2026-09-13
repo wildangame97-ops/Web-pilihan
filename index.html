@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WEB SUKMA BOGOR - Generator Dokumen Praktis & Cepat</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @media print {
+      body * { visibility: hidden; }
+      #printable-area, #printable-area * { visibility: visible; }
+      #printable-area { 
+        position: absolute; 
+        left: 0; 
+        top: 0; 
+        width: 100%; 
+        border: none !important; 
+        box-shadow: none !important; 
+        padding: 0 !important;
+      }
+      .no-print { display: none !important; }
+    }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col justify-between">
+
+  <!-- Header Navigasi -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-20 no-print">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-2 cursor-pointer" onclick="pilihMenu('dashboard')">
+        <div class="w-9 h-9 bg-blue-600 rounded-lg flex items-center justify-center text-white font-black text-sm shadow-sm">SB</div>
+        <div>
+          <span class="text-lg sm:text-xl font-black text-slate-900 tracking-tight block leading-tight">WEB SUKMA BOGOR</span>
+          <span class="text-[10px] text-slate-500 font-medium hidden sm:block">Aplikasi Pembuat Dokumen & Surat Otomatis</span>
+        </div>
+      </div>
+      <span class="text-xs font-semibold px-2.5 py-1 bg-blue-50 text-blue-700 rounded-full border border-blue-100">Siap Cetak / PDF</span>
+    </div>
+  </header>
+
+  <!-- Konten Utama -->
+  <main class="max-w-6xl mx-auto p-4 sm:p-6 flex-1 w-full">
+
+    <!-- DASHBOARD MENU -->
+    <section id="menu-dashboard" class="space-y-8">
+      <div class="text-center py-6">
+        <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Selamat Datang di WEB SUKMA BOGOR</h2>
+        <p class="text-slate-600 mt-2 text-sm sm:text-base max-w-xl mx-auto">Silakan pilih jenis dokumen yang ingin dibuat. Isi kolomnya dengan mudah, lalu cetak langsung atau simpan dalam format PDF.</p>
+      </div>
+
+      <!-- Kategori 1: Keuangan & Transaksi Bisnis -->
+      <div>
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
+          <span>💼 Keuangan & Transaksi Usaha</span>
+          <span class="flex-1 h-px bg-slate-200"></span>
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div onclick="pilihMenu('invoice')" class="bg-white p-5 rounded-xl border border-slate-200 hover:border-blue-500 hover:shadow-md transition cursor-pointer group">
+            <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center font-bold text-lg mb-3 group-hover:scale-105 transition-transform">📄</div>
+            <h4 class="font-bold text-slate-900">Invoice Penjualan</h4>
+            <p class="text-xs text-slate-500 mt-1">Tagihan pembayaran barang/jasa dengan hitungan subtotal otomatis.</p>
+          </div>
+
+          <div onclick="pilihMenu('kwitansi')" class="bg-white p-5 rounded-xl border border-slate-200 hover:border-amber-500 hover:shadow-md transition cursor-pointer group">
+            <div class="w-10 h-10 bg-amber-50 text-amber-600 rounded-lg flex items-center justify-center font-bold text-lg mb-3 group-hover:scale-105 transition-transform">🧾</div>
+            <h4 class="font-bold text-slate-900">Kwitansi Pembayaran</h4>
+            <p class="text-xs text-slate-500 mt-1">Tanda terima uang resmi dengan konversi otomatis nominal ke kata terbilang.</p>
+          </div>
+
+          <div onclick="pilihMenu('slip-gaji')" class="bg-white p-5 rounded-xl border border-slate-200 hover:border-emerald-500 hover:shadow-md transition cursor-pointer group">
+            <div class="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-lg flex items-center justify-center font-bold text-lg mb-3 group-hover:scale-105 transition-transform">💰</div>
+            <h4 class="font-bold text-slate-900">Slip Gaji Karyawan</h4>
+            <p class="text-xs text-slate-500 mt-1">Rincian gaji pokok, tunjangan, dan potongan karyawan/UMKM.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kategori 2: Surat Perjanjian & Legalitas -->
+      <div>
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
+          <span>📜 Perjanjian & Pengiriman</span>
+          <span class="flex-1 h-px bg-slate-200"></span>
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div onclick="pilihMenu('sewa-kos')" class="bg-white p-5 rounded-xl border border-slate-200 hover:border-cyan-500 hover:shadow-md transition cursor-pointer group">
+            <div class="w-10 h-10 bg-cyan-50 text-cyan-600 rounded-lg flex items-center justify-center font-bold text-lg mb-3 group-hover:scale-105 transition-transform">🏠</div>
+            <h4 class="font-bold text-slate-900">Perjanjian Sewa Kos / Rumah</h4>
+            <p class="text-xs text-slate-500 mt-1">Surat kesepakatan sewa properti, aturan deposit, dan jangka waktu.</p>
+          </div>
+
+          <div onclick="pilihMenu('surat-jalan')" class="bg-white p-5 rounded-xl border border-slate-200 hover:border-teal-500 hover:shadow-md transition cursor-pointer group">
+            <div class="w-10 h-10 bg-teal-50 text-teal-600 rounded-lg flex items-center justify-center font-bold text-lg mb-3 group-hover:scale-105 transition-transform">🚚</div>
+            <h4 class="font-bold text-slate-900">Surat Jalan / Pengiriman</h4>
+            <p class="text-xs text-slate-500 mt-1">Surat pengantar barang ekspedisi lengkap dengan kolom tanda tangan.</p>
+          </div>
+
+          <div onclick="pilihMenu('surat-kuasa')" class="bg-white p-5 rounded-xl border border-slate-200 hover:border-indigo-500 hover:shadow-md transition cursor-pointer group">
+            <div class="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-lg flex items-center justify-center font-bold text-lg mb-3 group-hover:scale-105 transition-transform">📋</div>
+            <h4 class="font-bold text-slate-900">Surat Kuasa</h4>
+            <p class="text-xs text-slate-500 mt-1">Pelimpahan wewenang urusan perbankan, dokumen, atau instansi.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kategori 3: Karir, Surat Izin & Acara -->
+      <div>
+        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
+          <span>✍️ Karir, Izin & Keperluan Umum</span>
+          <span class="flex-1 h-px bg-slate-200"></span>
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div onclick="pilihMenu('lamaran-kerja')" class="bg-white p-5 rounded-xl border border-slate-200 hover:border-violet-500 hover:shadow-md transition cursor-pointer group">
+            <div class="w-10 h-10 bg-violet-50 text-violet-600 rounded-lg flex items-center justify-center font-bold text-lg mb-3 group-hover:scale-105 transition-transform">💼</div>
+            <h4 class="font-bold text-slate-900">Surat Lamaran Kerja</h4>
+            <p class="text-xs text-slate-500 mt-1">Format profesional untuk melamar pekerjaan di berbagai perusahaan.</p>
+          </div>
+
+          <div onclick="pilihMenu('surat-izin')" class="bg-white p-5 rounded-xl border border-slate-200 hover:border-rose-500 hover:shadow-md transition cursor-pointer group">
+            <div class="w-10 h-10 bg-rose-50 text-rose-600 rounded-lg flex items-center justify-center font-bold text-lg mb-3 group-hover:scale-105 transition-transform">🩹</div>
+            <h4 class="font-bold text-slate-900">Surat Izin / Sakit</h4>
+            <p class="text-xs text-slate-500 mt-1">Permohonan izin tidak masuk kerja atau absen sekolah karena sakit/urusan.</p>
+          </div>
+
+          <div onclick="pilihMenu('surat-undangan')" class="bg-white p-5 rounded-xl border border-slate-200 hover:border-purple-500 hover:shadow-md transition cursor-pointer group">
+            <div class="w-10 h-10 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center font-bold text-lg mb-3 group-hover:scale-105 transition-transform">✉️</div>
+            <h4 class="font-bold text-slate-900">Surat Undangan</h4>
+            <p class="text-xs text-slate-500 mt-1">Undangan rapat, kegiatan warga, serta pertemuan formal organisasi.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HALAMAN EDITOR DOKUMEN -->
+    <section id="menu-editor" class="hidden space-y-4">
+      <!-- Toolbar Atas -->
+      <div class="flex flex-wrap items-center justify-between gap-3 bg-white p-4 rounded-xl border border-slate-200 shadow-sm no-print">
+        <button onclick="pilihMenu('dashboard')" class="text-sm font-semibold text-slate-600 hover:text-slate-900 flex items-center gap-1.5">
+          <span class="text-base">←</span> Kembali ke Menu
+        </button>
+
+        <!-- Tool Tambahan: Pasang Logo & Cap -->
+        <div class="flex flex-wrap items-center gap-4 text-xs font-medium">
+          <label class="cursor-pointer bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg border border-slate-300 text-slate-700 flex items-center gap-1">
+            📷 Pasang Logo
+            <input type="file" id="logo-uploader" accept="image/*" class="hidden" onchange="uploadLogo(event)">
+          </label>
+
+          <label class="flex items-center gap-1.5 cursor-pointer select-none">
+            <input type="checkbox" id="toggle-stamp" onchange="toggleStamp(this.checked)" class="rounded text-red-600">
+            <span>Tampilkan Cap "LUNAS"</span>
+          </label>
+        </div>
+
+        <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-2 rounded-lg shadow-sm text-sm flex items-center gap-2">
+          🖨️ Cetak / Simpan PDF
+        </button>
+      </div>
+
+      <!-- Lembar Kertas Dokumen (Preview & Edit Langsung) -->
+      <div id="printable-area" class="bg-white border border-slate-200 shadow-sm rounded-xl p-8 sm:p-12 max-w-3xl mx-auto min-h-[750px] text-sm relative">
+        <!-- Cap Lunas Stempel Digital -->
+        <div id="stamp-lunas" class="hidden absolute top-20 right-12 border-4 border-red-500 text-red-600 font-extrabold text-2xl uppercase tracking-widest px-4 py-1.5 rotate-[-15deg] rounded-md opacity-80 pointer-events-none select-none">
+          LUNAS
+        </div>
+
+        <!-- Logo yang di-upload -->
+        <div id="logo-preview-container" class="hidden mb-4">
+          <img id="logo-preview" src="" alt="Logo" class="max-h-16 max-w-40 object-contain">
+        </div>
+
+        <div id="konten-dokumen"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500 no-print mt-12">
+    <p>&copy; 2026 <strong class="text-slate-700">WEB SUKMA BOGOR</strong>. Semua hak dilindungi.</p>
+  </footer>
+
+  <script>
+    // FUNGSI NAVIGASI
+    function pilihMenu(tipe) {
+      const dashboard = document.getElementById('menu-dashboard');
+      const editor = document.getElementById('menu-editor');
+      const konten = document.getElementById('konten-dokumen');
+
+      // Reset stempel cap saat ganti menu
+      document.getElementById('toggle-stamp').checked = false;
+      document.getElementById('stamp-lunas').classList.add('hidden');
+
+      if (tipe === 'dashboard') {
+        dashboard.classList.remove('hidden');
+        editor.classList.add('hidden');
+        return;
+      }
+
+      dashboard.classList.add('hidden');
+      editor.classList.remove('hidden');
+
+      if (tipe === 'invoice') renderInvoice(konten);
+      if (tipe === 'kwitansi') renderKwitansi(konten);
+      if (tipe === 'slip-gaji') renderSlipGaji(konten);
+      if (tipe === 'sewa-kos') renderSewaKos(konten);
+      if (tipe === 'surat-jalan') renderSuratJalan(konten);
+      if (tipe === 'surat-kuasa') renderSuratKuasa(konten);
+      if (tipe === 'lamaran-kerja') renderLamaranKerja(konten);
+      if (tipe === 'surat-izin') renderSuratIzin(konten);
+      if (tipe === 'surat-undangan') renderUndangan(konten);
+    }
+
+    // FITUR UPLOAD LOGO
+    function uploadLogo(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const preview = document.getElementById('logo-preview');
+          const container = document.getElementById('logo-preview-container');
+          preview.src = e.target.result;
+          container.classList.remove('hidden');
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function toggleStamp(isChecked) {
+      const stamp = document.getElementById('stamp-lunas');
+      if (isChecked) {
+        stamp.classList.remove('hidden');
+      } else {
+        stamp.classList.add('hidden');
+      }
+    }
+
+    // FUNGSI TERBILANG ANGKA KE TEKS BAHASA INDONESIA
+    function angkaKeTerbilang(nilai) {
+      const bilangan = ["", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas"];
+      let angka = Math.floor(Math.abs(Number(nilai)));
+      if (isNaN(angka) || angka === 0) return "Nol Rupiah";
+
+      function proses(n) {
+        if (n < 12) return bilangan[n];
+        if (n < 20) return proses(n - 10) + " Belas";
+        if (n < 100) return proses(Math.floor(n / 10)) + " Puluh " + bilangan[n % 10];
+        if (n < 200) return "Seratus " + proses(n - 100);
+        if (n < 1000) return proses(Math.floor(n / 100)) + " Ratus " + proses(n % 100);
+        if (n < 2000) return "Seribu " + proses(n - 1000);
+        if (n < 1000000) return proses(Math.floor(n / 1000)) + " Ribu " + proses(n % 1000);
+        if (n < 1000000000) return proses(Math.floor(n / 1000000)) + " Juta " + proses(n % 1000000);
+        if (n < 1000000000000) return proses(Math.floor(n / 1000000000)) + " Miliar " + proses(n % 1000000000);
+        return "";
+      }
+
+      return (proses(angka).trim() + " Rupiah").replace(/\s+/g, ' ');
+    }
+
+    // 1. INVOICE
+    function renderInvoice(el) {
+      el.innerHTML = `
+        <div class="flex justify-between items-start border-b pb-4 mb-6">
+          <div class="flex-1">
+            <h2 class="text-2xl font-bold uppercase tracking-wider text-slate-900">INVOICE</h2>
+            <input type="text" placeholder="Nama Perusahaan / Usaha Anda" class="mt-1 font-semibold text-base w-full outline-none border-b border-dashed border-slate-300 focus:border-blue-500">
+            <input type="text" placeholder="No. Kontak / WhatsApp / Alamat Usaha" class="text-xs text-slate-500 w-full outline-none mt-1">
+          </div>
+          <div class="text-right">
+            <p class="text-xs text-slate-500">No. Tagihan</p>
+            <input type="text" value="INV-${Date.now().toString().slice(-5)}" class="text-right font-mono font-medium outline-none border-b border-dashed border-slate-300">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 mb-6">
+          <div>
+            <p class="text-xs text-slate-500 font-bold mb-1">DITAGIHKAN KEPADA:</p>
+            <input type="text" placeholder="Nama Pembeli / Klien" class="w-full font-medium outline-none border-b border-dashed border-slate-300 mb-1">
+            <input type="text" placeholder="Alamat / Kota Pembeli" class="w-full text-slate-600 outline-none border-b border-dashed border-slate-300">
+          </div>
+          <div class="text-right space-y-1">
+            <p class="text-xs text-slate-500 font-bold mb-1">TANGGAL:</p>
+            <input type="date" class="outline-none text-right font-medium">
+          </div>
+        </div>
+
+        <table class="w-full mb-6 border-collapse">
+          <thead>
+            <tr class="border-b border-t border-slate-300 font-semibold text-left">
+              <th class="py-2">Item / Deskripsi Pekerjaan</th>
+              <th class="py-2 text-right w-20">Qty</th>
+              <th class="py-2 text-right w-32">Harga (Rp)</th>
+              <th class="py-2 text-right w-32">Total (Rp)</th>
+            </tr>
+          </thead>
+          <tbody id="invoice-items">
+            <tr class="border-b border-slate-100">
+              <td class="py-2"><input type="text" placeholder="Nama item / barang" class="w-full outline-none"></td>
+              <td class="py-2"><input type="number" value="1" min="1" oninput="hitungTotalInvoice()" class="inv-qty w-full text-right outline-none"></td>
+              <td class="py-2"><input type="number" value="0" min="0" oninput="hitungTotalInvoice()" class="inv-harga w-full text-right outline-none"></td>
+              <td class="py-2 text-right font-medium inv-subtotal">0</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <button onclick="tambahBarisInvoice()" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded mb-6 font-medium no-print">+ Tambah Baris</button>
+
+        <div class="flex justify-between items-end border-t pt-4">
+          <div class="text-xs text-slate-500">
+            <p class="font-bold mb-1">Informasi Pembayaran:</p>
+            <input type="text" placeholder="BCA / Mandiri / BRI a/n Rekening Anda" class="outline-none border-b border-dashed border-slate-300 w-64">
+          </div>
+          <div class="w-1/2 space-y-2 text-right">
+            <div class="flex justify-between">
+              <span class="font-bold">Total Pembayaran:</span>
+              <span id="invoice-total" class="font-bold text-base text-blue-600">Rp 0</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 2. KWITANSI
+    function renderKwitansi(el) {
+      el.innerHTML = `
+        <div class="border-2 border-slate-700 p-6 rounded-lg space-y-4">
+          <div class="flex justify-between items-center border-b-2 border-slate-700 pb-3">
+            <h2 class="text-2xl font-bold tracking-widest text-slate-900">KWITANSI</h2>
+            <div>
+              <span class="text-xs text-slate-600">No: </span>
+              <input type="text" value="KWT-${Date.now().toString().slice(-5)}" class="font-mono font-medium outline-none">
+            </div>
+          </div>
+
+          <div class="space-y-3 pt-2">
+            <div class="flex items-center">
+              <span class="w-40 text-xs font-bold text-slate-600">Telah terima dari :</span>
+              <input type="text" placeholder="Nama Pembayar" class="flex-1 outline-none border-b border-dashed border-slate-400 font-medium">
+            </div>
+            <div class="flex items-start">
+              <span class="w-40 text-xs font-bold text-slate-600 pt-1">Uang Sejumlah :</span>
+              <div class="flex-1">
+                <input type="text" id="kwitansi-terbilang" readonly placeholder="Otomatis terisi saat nominal diketik" class="w-full outline-none border-b border-dashed border-slate-400 italic text-slate-700 bg-transparent">
+              </div>
+            </div>
+            <div class="flex items-center">
+              <span class="w-40 text-xs font-bold text-slate-600">Untuk Pembayaran :</span>
+              <input type="text" placeholder="Keterangan pembayaran barang / sewa / jasa" class="flex-1 outline-none border-b border-dashed border-slate-400">
+            </div>
+          </div>
+
+          <div class="flex justify-between items-end pt-8">
+            <div class="bg-slate-100 border border-slate-300 p-3 rounded text-lg font-bold text-slate-900">
+              Rp <input type="number" id="kwitansi-angka" oninput="updateTerbilangKwitansi(this.value)" placeholder="0" class="bg-transparent outline-none w-36 font-bold">
+            </div>
+            <div class="text-center w-48">
+              <input type="text" placeholder="Kota, Tanggal" class="text-center text-xs outline-none w-full mb-12 border-b border-dashed border-slate-300">
+              <p class="border-t border-slate-400 pt-1 font-medium">( ........................................ )</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 3. SLIP GAJI KARYAWAN
+    function renderSlipGaji(el) {
+      el.innerHTML = `
+        <div class="border-b pb-4 mb-4 text-center">
+          <h2 class="text-xl font-bold uppercase tracking-wider text-slate-900">SLIP GAJI KARYAWAN</h2>
+          <input type="text" placeholder="Nama Perusahaan / Usaha" class="text-center font-semibold text-base w-full outline-none mt-1">
+          <p class="text-xs text-slate-500 mt-1">Periode: <input type="text" placeholder="Bulan & Tahun (misal: September 2026)" class="outline-none border-b border-dashed border-slate-300"></p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 mb-6">
+          <div class="space-y-1">
+            <div class="flex"><span class="w-24 text-slate-500">Nama</span>: <input type="text" placeholder="Nama Karyawan" class="outline-none font-medium ml-2"></div>
+            <div class="flex"><span class="w-24 text-slate-500">Jabatan</span>: <input type="text" placeholder="Posisi / Bagian" class="outline-none ml-2"></div>
+          </div>
+          <div class="space-y-1 text-right">
+            <div class="flex justify-end"><span class="text-slate-500">NIK/ID:</span> <input type="text" placeholder="EMP-001" class="text-right outline-none w-28 ml-2"></div>
+            <div class="flex justify-end"><span class="text-slate-500">Tgl Bayar:</span> <input type="date" class="text-right outline-none ml-2"></div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-6 mb-6">
+          <!-- Penerimaan -->
+          <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+            <h4 class="font-bold text-xs uppercase text-slate-600 mb-3 border-b pb-1">Penerimaan</h4>
+            <div class="space-y-2">
+              <div class="flex justify-between items-center">
+                <span>Gaji Pokok</span>
+                <input type="number" id="gaji-pokok" value="0" oninput="hitungGaji()" class="w-28 text-right outline-none border-b bg-transparent">
+              </div>
+              <div class="flex justify-between items-center">
+                <span>Tunjangan / Uang Makan</span>
+                <input type="number" id="gaji-tunjangan" value="0" oninput="hitungGaji()" class="w-28 text-right outline-none border-b bg-transparent">
+              </div>
+              <div class="flex justify-between items-center">
+                <span>Lembur / Bonus</span>
+                <input type="number" id="gaji-bonus" value="0" oninput="hitungGaji()" class="w-28 text-right outline-none border-b bg-transparent">
+              </div>
+            </div>
+          </div>
+
+          <!-- Potongan -->
+          <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+            <h4 class="font-bold text-xs uppercase text-slate-600 mb-3 border-b pb-1">Potongan</h4>
+            <div class="space-y-2">
+              <div class="flex justify-between items-center">
+                <span>BPJS / Asuransi</span>
+                <input type="number" id="potongan-bpjs" value="0" oninput="hitungGaji()" class="w-28 text-right outline-none border-b bg-transparent">
+              </div>
+              <div class="flex justify-between items-center">
+                <span>Kasbon / Pinjaman</span>
+                <input type="number" id="potongan-kasbon" value="0" oninput="hitungGaji()" class="w-28 text-right outline-none border-b bg-transparent">
+              </div>
+              <div class="flex justify-between items-center">
+                <span>Keterlambatan / Lainnya</span>
+                <input type="number" id="potongan-lain" value="0" oninput="hitungGaji()" class="w-28 text-right outline-none border-b bg-transparent">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Total Diterima -->
+        <div class="bg-blue-50 border border-blue-200 p-4 rounded-lg flex justify-between items-center mb-8">
+          <div>
+            <span class="font-bold text-slate-900">Total Gaji Bersih (Take Home Pay)</span>
+            <p class="text-xs text-slate-500">Total penerimaan dikurangi potongan</p>
+          </div>
+          <span id="gaji-total" class="font-extrabold text-xl text-blue-700">Rp 0</span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 text-center mt-12">
+          <div>
+            <p class="text-xs text-slate-500 mb-16">Penerima,</p>
+            <p class="border-t border-slate-400 mx-8 pt-1 font-medium">( Karyawan )</p>
+          </div>
+          <div>
+            <p class="text-xs text-slate-500 mb-16">Bagian Keuangan,</p>
+            <p class="border-t border-slate-400 mx-8 pt-1 font-medium">( .................... )</p>
+          </div>
+        </div>
+      `;
+    }
+
+    // 4. SURAT PERJANJIAN SEWA KOS / RUMAH
+    function renderSewaKos(el) {
+      el.innerHTML = `
+        <div class="text-center border-b pb-4 mb-6">
+          <h2 class="text-xl font-bold uppercase tracking-wide text-slate-900">SURAT PERJANJIAN SEWA MENYEWA</h2>
+          <p class="text-xs text-slate-500 mt-1">Kamar Kos / Rumah / Kontrakan</p>
+        </div>
+
+        <div class="space-y-4">
+          <p>Pada hari ini, kami yang bertanda tangan di bawah ini:</p>
+          
+          <div class="pl-4 space-y-1">
+            <div class="flex"><span class="w-36 text-slate-500">Pihak Pertama (Pemilik)</span>: <input type="text" placeholder="Nama Pemilik" class="outline-none flex-1 font-medium border-b border-dashed border-slate-300"></div>
+            <div class="flex"><span class="w-36 text-slate-500">No. KTP / HP</span>: <input type="text" placeholder="08xxxxxxxxxx" class="outline-none flex-1 border-b border-dashed border-slate-300"></div>
+          </div>
+
+          <div class="pl-4 space-y-1">
+            <div class="flex"><span class="w-36 text-slate-500">Pihak Kedua (Penyewa)</span>: <input type="text" placeholder="Nama Penyewa" class="outline-none flex-1 font-medium border-b border-dashed border-slate-300"></div>
+            <div class="flex"><span class="w-36 text-slate-500">No. KTP / HP</span>: <input type="text" placeholder="08xxxxxxxxxx" class="outline-none flex-1 border-b border-dashed border-slate-300"></div>
+          </div>
+
+          <p class="pt-2">Kedua belah pihak sepakat mengadakan perjanjian sewa dengan rincian sebagai berikut:</p>
+
+          <div class="pl-4 space-y-2">
+            <p>1. <strong>Objek Sewa:</strong> Kamar / Unit di alamat <input type="text" placeholder="Alamat lengkap properti" class="w-96 border-b border-dashed border-slate-300 outline-none"></p>
+            <p>2. <strong>Jangka Waktu:</strong> Selama <input type="text" placeholder="1 Tahun / 6 Bulan" class="w-32 border-b border-dashed border-slate-300 outline-none text-center"> terhitung mulai tanggal <input type="date" class="outline-none"> sampai <input type="date" class="outline-none">.</p>
+            <p>3. <strong>Biaya Sewa:</strong> Sebesar Rp <input type="number" placeholder="0" class="w-36 border-b border-dashed border-slate-300 outline-none font-medium"> dibayarkan secara tunai / transfer.</p>
+            <p>4. <strong>Uang Jaminan (Deposit):</strong> Sebesar Rp <input type="number" placeholder="0" class="w-36 border-b border-dashed border-slate-300 outline-none"> (dikembalikan setelah masa sewa berakhir jika tidak ada kerusakan).</p>
+          </div>
+
+          <p class="text-xs text-slate-500 pt-2">Demikian surat perjanjian ini dibuat rangkap dua tanpa paksaan dari pihak manapun untuk dipergunakan sebagaimana mestinya.</p>
+
+          <div class="grid grid-cols-2 gap-4 text-center pt-8">
+            <div>
+              <p class="text-xs text-slate-500 mb-16">Pihak Kedua (Penyewa),</p>
+              <p class="border-t border-slate-400 mx-8 pt-1 font-medium">( .................... )</p>
+            </div>
+            <div>
+              <p class="text-xs text-slate-500 mb-12">Pihak Pertama (Pemilik),</p>
+              <span class="text-[10px] text-slate-400 border border-slate-300 px-2 py-1 inline-block mb-2">Materai</span>
+              <p class="border-t border-slate-400 mx-8 pt-1 font-medium">( .................... )</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 5. SURAT JALAN
+    function renderSuratJalan(el) {
+      el.innerHTML = `
+        <div class="text-center border-b pb-4 mb-6">
+          <h2 class="text-xl font-bold uppercase tracking-wide text-slate-900">SURAT JALAN / PENGIRIMAN</h2>
+          <input type="text" placeholder="Nama Perusahaan / Ekspedisi" class="text-center font-medium w-full outline-none mt-1">
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 mb-6">
+          <div>
+            <p class="text-xs text-slate-500 font-bold mb-1">TUJUAN PENGIRIMAN:</p>
+            <input type="text" placeholder="Nama Penerima" class="w-full font-medium outline-none border-b border-dashed border-slate-300 mb-1">
+            <textarea placeholder="Alamat Pengiriman Lengkap" rows="2" class="w-full text-slate-600 outline-none border-b border-dashed border-slate-300 resize-none"></textarea>
+          </div>
+          <div class="text-right space-y-1">
+            <div>
+              <span class="text-xs text-slate-500">No. Dokumen: </span>
+              <input type="text" value="SJ-${Date.now().toString().slice(-5)}" class="text-right font-mono font-medium outline-none">
+            </div>
+            <div>
+              <span class="text-xs text-slate-500">Tanggal: </span>
+              <input type="date" class="text-right outline-none font-medium">
+            </div>
+          </div>
+        </div>
+
+        <table class="w-full mb-8 border-collapse">
+          <thead>
+            <tr class="border-b border-t border-slate-300 font-semibold text-left">
+              <th class="py-2 w-12 text-center">No</th>
+              <th class="py-2">Nama Barang & Spesifikasi</th>
+              <th class="py-2 text-right w-24">Jumlah</th>
+              <th class="py-2 text-left w-32 pl-4">Keterangan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-slate-100">
+              <td class="py-2 text-center">1</td>
+              <td class="py-2"><input type="text" placeholder="Deskripsi barang" class="w-full outline-none"></td>
+              <td class="py-2 text-right"><input type="text" placeholder="1 Dus / Pcs" class="w-full text-right outline-none"></td>
+              <td class="py-2 pl-4"><input type="text" placeholder="Baik / Baru" class="w-full outline-none"></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="grid grid-cols-3 gap-4 text-center mt-12 pt-4">
+          <div>
+            <p class="text-xs text-slate-500 mb-16">Penerima,</p>
+            <p class="border-t border-slate-400 mx-4 pt-1 font-medium">( .................... )</p>
+          </div>
+          <div>
+            <p class="text-xs text-slate-500 mb-16">Pengemudi / Kurir,</p>
+            <p class="border-t border-slate-400 mx-4 pt-1 font-medium">( .................... )</p>
+          </div>
+          <div>
+            <p class="text-xs text-slate-500 mb-16">Hormat Kami,</p>
+            <p class="border-t border-slate-400 mx-4 pt-1 font-medium">( .................... )</p>
+          </div>
+        </div>
+      `;
+    }
+
+    // 6. SURAT IZIN / SAKIT
+    function renderSuratIzin(el) {
+      el.innerHTML = `
+        <div class="space-y-5">
+          <div class="text-right">
+            <input type="text" placeholder="Kota, Tanggal Hari Ini" class="text-right outline-none font-medium border-b border-dashed border-slate-300">
+          </div>
+
+          <div>
+            <p>Hal: <span class="font-semibold">Permohonan Izin Tidak Masuk</span></p>
+            <p class="mt-4">Kepada Yth.</p>
+            <input type="text" placeholder="Bapak/Ibu Pimpinan / Wali Kelas" class="w-full font-medium outline-none border-b border-dashed border-slate-300">
+            <input type="text" placeholder="Nama Kantor / Nama Sekolah" class="w-full outline-none border-b border-dashed border-slate-300">
+          </div>
+
+          <p>Dengan hormat,</p>
+
+          <p>Saya yang bertanda tangan di bawah ini:</p>
+          <div class="pl-4 space-y-1">
+            <div class="flex"><span class="w-32 text-slate-500">Nama</span>: <input type="text" placeholder="Nama Lengkap" class="outline-none flex-1 font-medium ml-2"></div>
+            <div class="flex"><span class="w-32 text-slate-500">Jabatan / Kelas</span>: <input type="text" placeholder="Staff / Kelas X" class="outline-none flex-1 ml-2"></div>
+            <div class="flex"><span class="w-32 text-slate-500">Alamat / Kontak</span>: <input type="text" placeholder="No Telepon / WhatsApp" class="outline-none flex-1 ml-2"></div>
+          </div>
+
+          <p>
+            Bermaksud untuk mengajukan izin tidak dapat hadir bertugas / belajar pada tanggal 
+            <input type="text" placeholder="Hari & Tanggal" class="border-b border-dashed border-blue-500 outline-none px-1 inline-block"> 
+            dikarenakan 
+            <input type="text" placeholder="Sakit / Keperluan Keluarga Penting" class="border-b border-dashed border-blue-500 outline-none px-1 inline-block w-80">.
+          </p>
+
+          <p>Demikian surat permohonan izin ini saya sampaikan. Atas pengertian dan izin yang Bapak/Ibu berikan, saya ucapkan terima kasih.</p>
+
+          <div class="flex justify-end pt-10">
+            <div class="text-center w-56">
+              <p class="text-slate-600 mb-16">Hormat saya,</p>
+              <input type="text" placeholder="Nama Lengkap" class="text-center font-semibold outline-none border-t border-slate-400 w-full pt-1">
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 7. SURAT LAMARAN KERJA
+    function renderLamaranKerja(el) {
+      el.innerHTML = `
+        <div class="space-y-5">
+          <div class="text-right">
+            <input type="text" placeholder="Kota, Tanggal Hari Ini" class="text-right outline-none font-medium border-b border-dashed border-slate-300">
+          </div>
+
+          <div>
+            <p>Hal: <span class="font-semibold">Lamaran Pekerjaan</span></p>
+            <p class="mt-4">Kepada Yth.</p>
+            <input type="text" placeholder="HRD Manager / Pimpinan Perusahaan" class="w-full font-medium outline-none border-b border-dashed border-slate-300">
+            <input type="text" placeholder="Nama PT / Instansi Tujuan" class="w-full outline-none border-b border-dashed border-slate-300">
+            <input type="text" placeholder="Alamat Perusahaan" class="w-full text-slate-600 outline-none border-b border-dashed border-slate-300">
+          </div>
+
+          <p>Dengan hormat,</p>
+
+          <p>
+            Berdasarkan informasi lowongan pekerjaan yang saya peroleh, saya bermaksud untuk mengajukan diri guna bergabung di posisi
+            <input type="text" placeholder="Nama Posisi yang Dilamar" class="font-semibold outline-none border-b border-dashed border-blue-500 px-1 inline-block">.
+          </p>
+
+          <div class="space-y-1.5 pl-4">
+            <div class="flex"><span class="w-36 text-slate-500">Nama Lengkap</span>: <input type="text" placeholder="Nama Anda" class="outline-none flex-1 font-medium ml-2"></div>
+            <div class="flex"><span class="w-36 text-slate-500">Pendidikan Terakhir</span>: <input type="text" placeholder="Jurusan & Kampus/Sekolah" class="outline-none flex-1 ml-2"></div>
+            <div class="flex"><span class="w-36 text-slate-500">Nomor Kontak/WA</span>: <input type="text" placeholder="08xxxxxxxxxx" class="outline-none flex-1 ml-2"></div>
+            <div class="flex"><span class="w-36 text-slate-500">Email</span>: <input type="email" placeholder="emailanda@gmail.com" class="outline-none flex-1 ml-2"></div>
+          </div>
+
+          <p>Sebagai bahan pertimbangan, bersama surat ini saya lampirkan Curriculum Vitae (CV) dan dokumen pendukung lainnya.</p>
+          <p>Demikian permohonan ini saya sampaikan. Besar harapan saya untuk diberikan kesempatan sesi wawancara. Terima kasih.</p>
+
+          <div class="flex justify-end pt-8">
+            <div class="text-center w-56">
+              <p class="text-slate-600 mb-16">Hormat saya,</p>
+              <input type="text" placeholder="Nama Lengkap" class="text-center font-semibold outline-none border-t border-slate-400 w-full pt-1">
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 8. SURAT KUASA
+    function renderSuratKuasa(el) {
+      el.innerHTML = `
+        <div class="text-center border-b pb-4 mb-6">
+          <h2 class="text-xl font-bold uppercase tracking-wide text-slate-900">SURAT KUASA</h2>
+        </div>
+
+        <div class="space-y-4">
+          <p>Saya yang bertanda tangan di bawah ini:</p>
+          <div class="pl-4 space-y-1">
+            <div class="flex"><span class="w-32 text-slate-500">Nama Lengkap</span>: <input type="text" placeholder="Nama Pemberi Kuasa" class="outline-none flex-1 font-medium ml-2 border-b border-dashed border-slate-300"></div>
+            <div class="flex"><span class="w-32 text-slate-500">NIK / KTP</span>: <input type="text" placeholder="Nomor KTP" class="outline-none flex-1 ml-2 border-b border-dashed border-slate-300"></div>
+          </div>
+
+          <p class="pt-2">Dengan ini memberikan kuasa penuh kepada:</p>
+          <div class="pl-4 space-y-1">
+            <div class="flex"><span class="w-32 text-slate-500">Nama Lengkap</span>: <input type="text" placeholder="Nama Penerima Kuasa" class="outline-none flex-1 font-medium ml-2 border-b border-dashed border-slate-300"></div>
+            <div class="flex"><span class="w-32 text-slate-500">NIK / KTP</span>: <input type="text" placeholder="Nomor KTP" class="outline-none flex-1 ml-2 border-b border-dashed border-slate-300"></div>
+          </div>
+
+          <div class="pt-2">
+            <p class="font-semibold text-xs text-slate-600 mb-1 uppercase tracking-wider">UNTUK MELAKUKAN:</p>
+            <textarea rows="3" class="w-full outline-none border border-slate-200 p-2 rounded resize-none" placeholder="Tuliskan wewenang yang diberikan secara jelas, misalnya: Mengurus berkas administrasi / perbankan / pengambilan dokumen..."></textarea>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4 text-center pt-10">
+            <div>
+              <p class="text-xs text-slate-500 mb-16">Penerima Kuasa,</p>
+              <p class="border-t border-slate-400 mx-8 pt-1 font-medium">( .................... )</p>
+            </div>
+            <div>
+              <p class="text-xs text-slate-500 mb-12">Pemberi Kuasa,</p>
+              <span class="text-[10px] text-slate-400 border border-slate-300 px-2 py-1 inline-block mb-2">Materai</span>
+              <p class="border-t border-slate-400 mx-8 pt-1 font-medium">( .................... )</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 9. SURAT UNDANGAN
+    function renderUndangan(el) {
+      el.innerHTML = `
+        <div class="text-center border-b pb-4 mb-6">
+          <input type="text" placeholder="KOP SURAT / INSTANSI / ORGANISASI" class="text-center font-bold text-lg w-full outline-none border-b border-dashed border-slate-300">
+          <input type="text" placeholder="Alamat & Kontak Penyelenggara" class="text-center text-xs text-slate-500 w-full outline-none mt-1">
+        </div>
+
+        <div class="flex justify-between mb-6">
+          <div>
+            <p><span class="inline-block w-16 text-slate-500">Nomor</span>: <input type="text" placeholder="001/UND/2026" class="outline-none font-mono"></p>
+            <p><span class="inline-block w-16 text-slate-500">Perihal</span>: <input type="text" placeholder="Undangan Rapat / Acara" class="outline-none font-medium"></p>
+          </div>
+          <div class="text-right">
+            <input type="text" placeholder="Kota, Tanggal" class="text-right outline-none">
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <p>Kepada Yth,</p>
+          <input type="text" placeholder="Bapak/Ibu/Saudara Nama Penerima" class="font-medium outline-none border-b border-dashed border-slate-300 w-full max-w-sm">
+          <p class="text-slate-500 text-xs mt-1">Di tempat</p>
+        </div>
+
+        <div class="space-y-4 mb-6">
+          <p>Dengan hormat, sehubungan dengan agenda kegiatan yang akan dilaksanakan, kami mengundang Anda untuk hadir pada:</p>
+
+          <div class="pl-6 space-y-1">
+            <p><span class="inline-block w-24 text-slate-500">Hari, Tanggal</span>: <input type="text" placeholder="Senin, 14 September 2026" class="outline-none font-medium w-80"></p>
+            <p><span class="inline-block w-24 text-slate-500">Waktu</span>: <input type="text" placeholder="09:00 WIB - Selesai" class="outline-none font-medium w-80"></p>
+            <p><span class="inline-block w-24 text-slate-500">Tempat</span>: <input type="text" placeholder="Ruang Rapat / Aula Pertemuan" class="outline-none font-medium w-80"></p>
+          </div>
+
+          <p>Demikian undangan ini kami sampaikan. Atas perhatian dan partisipasi Bapak/Ibu, kami ucapkan terima kasih.</p>
+        </div>
+
+        <div class="flex justify-end mt-12 text-center">
+          <div>
+            <p class="text-xs text-slate-500 mb-16">Hormat Kami,</p>
+            <p class="border-t border-slate-400 px-6 pt-1 font-medium">( ........................................ )</p>
+          </div>
+        </div>
+      `;
+    }
+
+    // HELPER KALKULASI INVOICE
+    function tambahBarisInvoice() {
+      const tbody = document.getElementById('invoice-items');
+      const tr = document.createElement('tr');
+      tr.className = 'border-b border-slate-100';
+      tr.innerHTML = `
+        <td class="py-2"><input type="text" placeholder="Nama item / barang" class="w-full outline-none"></td>
+        <td class="py-2"><input type="number" value="1" min="1" oninput="hitungTotalInvoice()" class="inv-qty w-full text-right outline-none"></td>
+        <td class="py-2"><input type="number" value="0" min="0" oninput="hitungTotalInvoice()" class="inv-harga w-full text-right outline-none"></td>
+        <td class="py-2 text-right font-medium inv-subtotal">0</td>
+      `;
+      tbody.appendChild(tr);
+    }
+
+    function hitungTotalInvoice() {
+      const rows = document.querySelectorAll('#invoice-items tr');
+      let grandTotal = 0;
+      rows.forEach(row => {
+        const qty = parseFloat(row.querySelector('.inv-qty')?.value || 0);
+        const harga = parseFloat(row.querySelector('.inv-harga')?.value || 0);
+        const sub = qty * harga;
+        const subEl = row.querySelector('.inv-subtotal');
+        if (subEl) subEl.textContent = sub.toLocaleString('id-ID');
+        grandTotal += sub;
+      });
+      const totalEl = document.getElementById('invoice-total');
+      if (totalEl) totalEl.textContent = 'Rp ' + grandTotal.toLocaleString('id-ID');
+    }
+
+    // HELPER KWITANSI
+    function updateTerbilangKwitansi(val) {
+      const teks = angkaKeTerbilang(val);
+      document.getElementById('kwitansi-terbilang').value = teks;
+    }
+
+    // HELPER GAJI
+    function hitungGaji() {
+      const pokok = parseFloat(document.getElementById('gaji-pokok')?.value || 0);
+      const tunjangan = parseFloat(document.getElementById('gaji-tunjangan')?.value || 0);
+      const bonus = parseFloat(document.getElementById('gaji-bonus')?.value || 0);
+
+      const bpjs = parseFloat(document.getElementById('potongan-bpjs')?.value || 0);
+      const kasbon = parseFloat(document.getElementById('potongan-kasbon')?.value || 0);
+      const lain = parseFloat(document.getElementById('potongan-lain')?.value || 0);
+
+      const totalPenerimaan = pokok + tunjangan + bonus;
+      const totalPotongan = bpjs + kasbon + lain;
+      const bersih = Math.max(0, totalPenerimaan - totalPotongan);
+
+      const el = document.getElementById('gaji-total');
+      if (el) el.textContent = 'Rp ' + bersih.toLocaleString('id-ID');
+    }
+  </script>
+</body>
+</html>
