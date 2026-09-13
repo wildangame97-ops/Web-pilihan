@@ -3,21 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>WEB SUKMA BOGOR - Generator Dokumen Praktis & AI Assistant</title>
+  <!-- Judul ringkas agar tidak muncul nama panjang di header cetak -->
+  <title>Dokumen</title>
   
-  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Library Unduh PDF Otomatis di HP & PC -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <style>
-    @page { margin: 12mm; }
-    body.kertas-a4 @page { size: A4 portrait; }
-    body.kertas-f4 @page { size: 215mm 330mm portrait; }
+    /* Hilangkan Header URL dan Footer Tanggal bawaan browser */
+    @page { 
+      margin: 10mm;
+      size: auto;
+    }
 
     @media print {
-      body * { visibility: hidden; }
-      #printable-area, #printable-area * { visibility: visible; }
+      /* Hilangkan header URL dan footer tanggal otomatis browser */
+      html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #ffffff !important;
+      }
+
+      body * { 
+        visibility: hidden; 
+      }
+
+      #printable-area, #printable-area * { 
+        visibility: visible; 
+      }
+
       #printable-area { 
         position: absolute; 
         left: 0; 
@@ -26,8 +40,20 @@
         border: none !important; 
         box-shadow: none !important; 
         padding: 0 !important;
+        margin: 0 !important;
       }
-      .no-print { display: none !important; }
+
+      /* Semua elemen dengan class no-print PASTI HILANG di PDF/Print */
+      .no-print { 
+        display: none !important; 
+      }
+
+      /* Hilangkan border/garis kotak textarea saat diprint agar menyerupai ketikan surat asli */
+      textarea, input {
+        border: none !important;
+        background: transparent !important;
+        resize: none !important;
+      }
     }
 
     .table-responsive {
@@ -36,7 +62,7 @@
     }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between kertas-a4">
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between">
 
   <!-- Header Navigasi -->
   <header class="bg-white border-b border-slate-200 sticky top-0 z-30 no-print shadow-xs">
@@ -45,7 +71,7 @@
         <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-black text-sm shadow-sm">SB</div>
         <div>
           <span class="text-base sm:text-lg font-black text-slate-900 tracking-tight block leading-tight">WEB SUKMA BOGOR</span>
-          <span class="text-[9px] text-slate-500 font-medium hidden sm:block">Aplikasi Dokumen Otomatis & AI Assistant</span>
+          <span class="text-[9px] text-slate-500 font-medium hidden sm:block">Aplikasi Dokumen & Surat Otomatis</span>
         </div>
       </div>
       
@@ -54,7 +80,7 @@
           <span>✨ Asisten AI</span>
         </button>
         <button onclick="bukaModalQRIS()" class="bg-amber-500 hover:bg-amber-600 text-white font-semibold text-xs px-2.5 py-1.5 rounded-lg flex items-center gap-1 shadow-sm transition">
-          <span>☕ Traktir Kopi</span>
+          <span>☕ Kopi</span>
         </button>
       </div>
     </div>
@@ -66,14 +92,11 @@
     <!-- DASHBOARD MENU -->
     <section id="menu-dashboard" class="space-y-6">
       <div class="text-center py-4 sm:py-6 bg-gradient-to-b from-blue-50/70 to-transparent rounded-2xl px-3 border border-blue-100/60">
-        <div class="inline-flex items-center gap-1.5 bg-purple-100 text-purple-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full mb-2">
-          <span>✨ Didukung Fitur AI Perangkai Kata Otomatis</span>
-        </div>
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Buat Surat & Dokumen Cepat</h2>
-        <p class="text-slate-600 mt-1 text-xs sm:text-sm max-w-lg mx-auto">Pilih template, rangkai kalimat formal menggunakan AI, cetak atau unduh PDF resmi.</p>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Pilih Dokumen</h2>
+        <p class="text-slate-600 mt-1 text-xs sm:text-sm max-w-lg mx-auto">Isi form dokumen dari HP, susun kata dengan AI, lalu unduh PDF bersih siap cetak.</p>
         
         <div class="mt-4 max-w-md mx-auto relative">
-          <input type="text" id="searchInput" oninput="filterDokumen()" placeholder="🔍 Cari template... (tanah, motor, invoice, utang, kerja)" class="w-full pl-3.5 pr-9 py-2 bg-white rounded-xl border border-slate-300 shadow-xs focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs sm:text-sm">
+          <input type="text" id="searchInput" oninput="filterDokumen()" placeholder="🔍 Cari nama dokumen..." class="w-full pl-3.5 pr-9 py-2 bg-white rounded-xl border border-slate-300 shadow-xs focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs sm:text-sm">
         </div>
       </div>
 
@@ -87,7 +110,7 @@
           <div onclick="pilihMenu('invoice')" class="doc-card bg-white p-3.5 rounded-xl border border-slate-200 hover:border-blue-500 transition cursor-pointer active:scale-95" data-keywords="invoice tagihan nota penjualan pembayaran">
             <div class="w-8 h-8 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center font-bold text-base mb-2">📄</div>
             <h4 class="font-bold text-slate-900 text-xs sm:text-sm leading-tight">Invoice</h4>
-            <p class="text-[10px] text-slate-500 mt-0.5">Tagihan & hitungan otomatis</p>
+            <p class="text-[10px] text-slate-500 mt-0.5">Tagihan & hitung otomatis</p>
           </div>
 
           <div onclick="pilihMenu('kwitansi')" class="doc-card bg-white p-3.5 rounded-xl border border-slate-200 hover:border-amber-500 transition cursor-pointer active:scale-95" data-keywords="kwitansi pembayaran tanda terima uang kas">
@@ -117,7 +140,7 @@
           <span class="flex-1 h-px bg-slate-200"></span>
         </h3>
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3.5">
-          <div onclick="pilihMenu('jual-beli-tanah')" class="doc-card bg-white p-3.5 rounded-xl border-2 border-amber-300 hover:border-amber-500 transition cursor-pointer active:scale-95" data-keywords="jual beli tanah adat girik letter c petok d sawah kebun">
+          <div onclick="pilihMenu('jual-beli-tanah')" class="doc-card bg-white p-3.5 rounded-xl border-2 border-amber-300 hover:border-amber-500 transition cursor-pointer active:scale-95" data-keywords="jual beli tanah adat girik letter c petuk petok d sawah kebun">
             <div class="w-8 h-8 bg-amber-100 text-amber-800 rounded-lg flex items-center justify-center font-bold text-base mb-2">🌾</div>
             <h4 class="font-bold text-slate-900 text-xs sm:text-sm leading-tight">Tanah Girik / Adat</h4>
             <p class="text-[10px] text-slate-500 mt-0.5">Lengkap 4 batas tanah</p>
@@ -143,7 +166,7 @@
         </div>
       </div>
 
-      <!-- Kategori 3: Karir & Umum -->
+      <!-- Kategori 3: Karir & Surat Izin -->
       <div class="kategori-section">
         <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2.5 flex items-center gap-2">
           <span>✍️ Karir & Administrasi</span>
@@ -177,24 +200,6 @@
             <p class="text-[10px] text-slate-500 mt-0.5">Klausul damai/kesepakatan</p>
           </div>
 
-          <div onclick="pilihMenu('kontrak-kerja')" class="doc-card bg-white p-3.5 rounded-xl border border-slate-200 hover:border-indigo-500 transition cursor-pointer active:scale-95" data-keywords="kontrak kerja spk pkwt karyawan toko pegawai">
-            <div class="w-8 h-8 bg-indigo-50 text-indigo-700 rounded-lg flex items-center justify-center font-bold text-base mb-2">📑</div>
-            <h4 class="font-bold text-slate-900 text-xs sm:text-sm leading-tight">Kontrak Kerja (SPK)</h4>
-            <p class="text-[10px] text-slate-500 mt-0.5">Aturan jam & upah kerja</p>
-          </div>
-
-          <div onclick="pilihMenu('surat-kuasa')" class="doc-card bg-white p-3.5 rounded-xl border border-slate-200 hover:border-indigo-500 transition cursor-pointer active:scale-95" data-keywords="surat kuasa wewenang bank ktp perwakilan">
-            <div class="w-8 h-8 bg-indigo-50 text-indigo-600 rounded-lg flex items-center justify-center font-bold text-base mb-2">📋</div>
-            <h4 class="font-bold text-slate-900 text-xs sm:text-sm leading-tight">Surat Kuasa</h4>
-            <p class="text-[10px] text-slate-500 mt-0.5">Wewenang bank/instansi</p>
-          </div>
-
-          <div onclick="pilihMenu('surat-jalan')" class="doc-card bg-white p-3.5 rounded-xl border border-slate-200 hover:border-teal-500 transition cursor-pointer active:scale-95" data-keywords="surat jalan kirim barang ekspedisi kurir">
-            <div class="w-8 h-8 bg-teal-50 text-teal-600 rounded-lg flex items-center justify-center font-bold text-base mb-2">🚚</div>
-            <h4 class="font-bold text-slate-900 text-xs sm:text-sm leading-tight">Surat Jalan</h4>
-            <p class="text-[10px] text-slate-500 mt-0.5">Pengiriman ekspedisi</p>
-          </div>
-
           <div onclick="pilihMenu('surat-undangan')" class="doc-card bg-white p-3.5 rounded-xl border border-slate-200 hover:border-purple-500 transition cursor-pointer active:scale-95" data-keywords="surat undangan rapat warga acara">
             <div class="w-8 h-8 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center font-bold text-base mb-2">✉️</div>
             <h4 class="font-bold text-slate-900 text-xs sm:text-sm leading-tight">Surat Undangan</h4>
@@ -202,34 +207,22 @@
           </div>
         </div>
       </div>
-
-      <!-- Banner Donasi QRIS -->
-      <div class="bg-gradient-to-r from-amber-500 to-amber-600 text-white rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xs">
-        <div>
-          <h4 class="font-bold text-sm sm:text-base">Dukung Pengembangan WEB SUKMA BOGOR ☕</h4>
-          <p class="text-[11px] text-amber-100">Bantu server dan biaya pengembangan agar aplikasi gratis ini terus aktif.</p>
-        </div>
-        <button onclick="bukaModalQRIS()" class="bg-white text-amber-700 hover:bg-amber-50 font-bold px-3.5 py-1.5 rounded-xl text-xs shadow-xs transition active:scale-95">
-          Scan QRIS
-        </button>
-      </div>
     </section>
 
     <!-- HALAMAN EDITOR DOKUMEN -->
     <section id="menu-editor" class="hidden space-y-3">
       <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs no-print space-y-2.5">
         <div class="flex items-center justify-between">
-          <button onclick="pilihMenu('dashboard')" class="text-xs font-semibold text-slate-600 hover:text-slate-900 flex items-center gap-1">
+          <button onclick="pilihMenu('dashboard')" class="text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 flex items-center gap-1">
             <span>← Kembali</span>
           </button>
           
           <div class="flex items-center gap-1.5">
-            <button onclick="bukaModalAI()" class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-semibold px-2.5 py-1.5 rounded-lg text-xs flex items-center gap-1 shadow-xs active:scale-95">
-              <span>✨ Bantuan AI</span>
+            <!-- Unduh Langsung PDF (Bersih tanpa dialog print) -->
+            <button onclick="unduhPDFLangsung()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-3 py-1.5 rounded-lg text-xs flex items-center gap-1 shadow-xs active:scale-95">
+              <span>📥 Simpan PDF Bersih</span>
             </button>
-            <button onclick="unduhPDFLangsung()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-2.5 py-1.5 rounded-lg text-xs flex items-center gap-1 shadow-xs active:scale-95">
-              <span>📥 Unduh PDF</span>
-            </button>
+            <!-- Cetak Print biasa -->
             <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-2.5 py-1.5 rounded-lg text-xs flex items-center gap-1 shadow-xs active:scale-95">
               <span>🖨️ Cetak</span>
             </button>
@@ -238,13 +231,8 @@
 
         <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100 text-xs">
           <div class="flex items-center gap-2">
-            <div class="flex items-center border border-slate-300 rounded-lg overflow-hidden bg-slate-50 text-[11px]">
-              <button id="btn-kertas-a4" onclick="setKertas('a4')" class="px-2 py-1 bg-blue-600 text-white font-bold">A4</button>
-              <button id="btn-kertas-f4" onclick="setKertas('f4')" class="px-2 py-1 text-slate-600 hover:bg-slate-200">F4/Folio</button>
-            </div>
-
             <label class="cursor-pointer bg-slate-100 hover:bg-slate-200 px-2.5 py-1 rounded-lg border border-slate-300 text-slate-700 text-[11px] flex items-center gap-1">
-              📷 Logo
+              📷 Pasang Logo
               <input type="file" id="logo-uploader" accept="image/*" class="hidden" onchange="uploadLogo(event)">
             </label>
 
@@ -262,8 +250,8 @@
         </div>
       </div>
 
-      <!-- Lembar Kertas Dokumen -->
-      <div id="printable-area" class="bg-white border border-slate-200 shadow-xs rounded-xl p-4 sm:p-10 max-w-3xl mx-auto min-h-[700px] text-xs sm:text-sm relative overflow-hidden">
+      <!-- Lembar Kertas Dokumen (Dioptimalkan agar bersih tanpa garis/tombol di PDF) -->
+      <div id="printable-area" class="bg-white border border-slate-200 shadow-xs rounded-xl p-6 sm:p-10 max-w-3xl mx-auto min-h-[700px] text-xs sm:text-sm relative overflow-hidden">
         <div id="stamp-badge" class="hidden absolute top-12 sm:top-20 right-6 sm:right-12 border-4 font-extrabold text-lg sm:text-2xl uppercase tracking-widest px-3 py-1 rotate-[-15deg] rounded-md opacity-80 pointer-events-none select-none">
           LUNAS
         </div>
@@ -278,7 +266,7 @@
 
   </main>
 
-  <!-- ================= MODAL ASISTEN AI GENERATOR ================= -->
+  <!-- MODAL ASISTEN AI GENERATOR -->
   <div id="modal-ai" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-3 no-print">
     <div class="bg-white rounded-2xl max-w-md w-full p-4 sm:p-5 space-y-3 shadow-2xl relative">
       <div class="flex justify-between items-center border-b pb-2">
@@ -289,36 +277,32 @@
         <button onclick="tutupModalAI()" class="text-slate-400 hover:text-slate-600 font-bold text-xl leading-none">&times;</button>
       </div>
 
-      <p class="text-[11px] text-slate-500">Tuliskan inti maksud Anda dalam kalimat santai atau kata kunci singkat. AI akan menyusunnya menjadi kalimat formal resmi.</p>
+      <p class="text-[11px] text-slate-500">Tulis maksud singkat dengan bahasa santai. AI akan menyusunnya menjadi kalimat resmi.</p>
 
-      <!-- Pilihan Kategori AI -->
-      <div class="space-y-2">
+      <div class="space-y-1">
         <label class="block text-[11px] font-bold text-slate-700">Untuk Dokumen:</label>
         <select id="ai-kategori" class="w-full text-xs p-2 rounded-lg border border-slate-300 bg-slate-50 font-medium">
           <option value="lamaran">Surat Lamaran Kerja (Alasan & Promosi Diri)</option>
           <option value="izin">Surat Izin / Sakit (Alasan Sopan)</option>
           <option value="pernyataan">Surat Pernyataan (Kesepakatan Damai/Hukum)</option>
-          <option value="undangan">Surat Undangan (Pembuka & Maksud Acara)</option>
+          <option value="undangan">Surat Undangan (Pembuka Acara)</option>
         </select>
       </div>
 
-      <!-- Input Catatan Pengguna -->
       <div class="space-y-1">
-        <label class="block text-[11px] font-bold text-slate-700">Inti Maksud / Pengalaman Anda:</label>
-        <textarea id="ai-prompt-input" rows="3" class="w-full text-xs p-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none" placeholder="Contoh: Lulusan SMA, pengalaman kasir 1 th di toko ritel, bisa melayani pembeli ramah..."></textarea>
+        <label class="block text-[11px] font-bold text-slate-700">Poin Maksud Anda:</label>
+        <textarea id="ai-prompt-input" rows="3" class="w-full text-xs p-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none" placeholder="Contoh: demam tinggi periksa dokter, butuh istirahat 2 hari..."></textarea>
       </div>
 
-      <!-- Tombol Generate AI -->
       <button id="btn-generate-ai" onclick="prosesGenerateAI()" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold text-xs py-2.5 rounded-xl shadow-xs flex items-center justify-center gap-1.5 transition active:scale-98">
         <span>✨ Rangkai Kalimat Formal Sekarang</span>
       </button>
 
-      <!-- Hasil AI -->
       <div id="ai-result-box" class="hidden space-y-2 pt-1 border-t border-slate-100">
         <label class="block text-[11px] font-bold text-purple-700">Hasil Rangkaian AI:</label>
         <div id="ai-result-text" class="text-xs bg-purple-50/60 border border-purple-200 p-2.5 rounded-xl text-slate-700 max-h-36 overflow-y-auto leading-relaxed italic"></div>
         <button onclick="terapkanTeksAI()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs py-2 rounded-xl transition flex items-center justify-center gap-1">
-          <span>✓ Masukkan Teks Ini ke Dokumen</span>
+          <span>✓ Masukkan ke Lembar Dokumen</span>
         </button>
       </div>
     </div>
@@ -326,20 +310,14 @@
 
   <!-- POPUP QRIS -->
   <div id="modal-qris" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-3 no-print">
-    <div class="bg-white rounded-2xl max-w-sm w-full p-5 space-y-4 shadow-2xl text-center relative">
-      <button onclick="tutupModalQRIS()" class="absolute top-3 right-3 text-slate-400 hover:text-slate-600 font-bold text-xl">&times;</button>
-      <div>
-        <span class="inline-block bg-amber-100 text-amber-800 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase mb-1">Dukungan</span>
-        <h3 class="font-extrabold text-slate-900 text-base">Traktir Kopi Admin ☕</h3>
-        <p class="text-xs text-slate-500">Scan QRIS dari aplikasi e-wallet / mobile banking apa saja.</p>
+    <div class="bg-white rounded-2xl max-w-sm w-full p-5 space-y-3 shadow-2xl text-center relative">
+      <button onclick="tutupModalQRIS()" class="absolute top-3 right-3 text-slate-400 font-bold text-xl">&times;</button>
+      <h3 class="font-extrabold text-slate-900 text-base">Traktir Kopi Admin ☕</h3>
+      <p class="text-xs text-slate-500">Scan QRIS dari GoPay, OVO, DANA, BCA, atau m-Banking apa saja.</p>
+      <div class="bg-white p-2 rounded-xl border border-slate-200 inline-block">
+        <img id="qris-image" src="qris.jpg" alt="QRIS Sukma Bogor" class="w-56 h-56 object-contain mx-auto rounded-lg">
       </div>
-      <div class="bg-white p-2 rounded-xl border-2 border-slate-200 shadow-inner inline-block">
-        <img id="qris-image" src="" alt="QRIS Sukma Bogor" class="w-56 h-56 object-contain mx-auto rounded-lg">
-      </div>
-      <div class="flex gap-2">
-        <button onclick="unduhQRIS()" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold py-2 rounded-xl">💾 Simpan</button>
-        <button onclick="tutupModalQRIS()" class="flex-1 bg-slate-100 text-slate-700 text-xs font-semibold py-2 rounded-xl">Tutup</button>
-      </div>
+      <button onclick="tutupModalQRIS()" class="w-full bg-slate-100 text-slate-700 text-xs font-semibold py-2 rounded-xl">Tutup</button>
     </div>
   </div>
 
@@ -364,17 +342,16 @@
   </div>
 
   <!-- Footer -->
-  <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500 no-print mt-8 px-4">
-    <p>&copy; 2026 <strong class="text-slate-700">WEB SUKMA BOGOR</strong>. Solusi pembuatan surat resmi mandiri berbasis AI.</p>
+  <footer class="bg-white border-t border-slate-200 py-3 text-center text-xs text-slate-500 no-print mt-8 px-4">
+    <p>&copy; 2026 WEB SUKMA BOGOR</p>
   </footer>
 
   <script>
-    const QRIS_SRC = "qris.jpg"; 
     let targetSlotAktif = null;
     let templateAktif = "";
     let hasilTeksAITerakhir = "";
 
-    // ================= FITUR ASISTEN AI =================
+    // ================= FUNGSI AI =================
     function bukaModalAI(kategoriDefault) {
       if (kategoriDefault) {
         document.getElementById('ai-kategori').value = kategoriDefault;
@@ -391,7 +368,6 @@
       document.getElementById('modal-ai').classList.add('hidden');
     }
 
-    // Mesin Perangkai AI Cerdas
     function prosesGenerateAI() {
       const kat = document.getElementById('ai-kategori').value;
       const prompt = document.getElementById('ai-prompt-input').value.trim();
@@ -404,16 +380,16 @@
 
       setTimeout(() => {
         let hasil = "";
-        const pClean = prompt || "saya bermaksud mengajukan berkas resmi ini";
+        const pClean = prompt || "keperluan berkas ini";
 
         if (kat === 'lamaran') {
-          hasil = `Berdasarkan latar belakang kualifikasi yang saya miliki, di mana saya memiliki kompetensi di bidang ${pClean}, saya meyakini dapat memberikan dedikasi serta kontribusi positif secara profesional terhadap kemajuan divisi kerja di instansi/perusahaan yang Bapak/Ibu pimpin. Saya senantiasa berkomitmen untuk belajar cepat, memegang teguh integritas, serta bekerja sama secara proaktif di dalam tim.`;
+          hasil = `Berdasarkan latar belakang kualifikasi yang saya miliki di bidang ${pClean}, saya meyakini dapat memberikan dedikasi serta kontribusi positif secara profesional terhadap instansi/perusahaan yang Bapak/Ibu pimpin. Saya senantiasa berkomitmen untuk belajar cepat, memegang teguh integritas, serta bekerja sama secara proaktif di dalam tim.`;
         } else if (kat === 'izin') {
-          hasil = `Dengan rasa hormat, melalui surat ini saya menyampaikan permohonan izin untuk tidak dapat hadir bertugas / mengikuti kegiatan pembelajaran, sehubungan dengan adanya keadaan penting yaitu ${pClean}. Saya berjanji akan senantiasa memperbarui informasi tugas serta berkoordinasi dengan rekan kerja / teman sejawat selama ketidakhadiran saya.`;
+          hasil = `Dengan rasa hormat, melalui surat ini saya menyampaikan permohonan izin tidak dapat hadir bertugas/mengikuti kegiatan pembelajaran, sehubungan dengan adanya keadaan penting yaitu ${pClean}. Saya berjanji akan senantiasa memperbarui informasi tugas serta berkoordinasi dengan rekan kerja/rekan sekolah selama ketidakhadiran saya.`;
         } else if (kat === 'pernyataan') {
-          hasil = `Bahwa kedua belah pihak telah saling berkoordinasi dan sepakat menyelesaikan hal terkait ${pClean} secara musyawarah dan kekeluargaan dengan itikad baik. Dengan disepakatinya pernyataan ini, masing-masing pihak menyatakan tidak ada lagi tuntutan hukum, klaim material, maupun perselisihan di masa mendatang, serta menganggap permasalahan telah tuntas seutuhnya.`;
+          hasil = `Bahwa kedua belah pihak telah saling berkoordinasi dan sepakat menyelesaikan hal terkait ${pClean} secara musyawarah dan kekeluargaan dengan itikad baik. Masing-masing pihak menyatakan tidak ada lagi tuntutan hukum maupun perselisihan di kemudian hari.`;
         } else if (kat === 'undangan') {
-          hasil = `Sehubungan dengan dilaksanakannya agenda penting terkait ${pClean}, kami sangat mengharapkan kesediaan serta kehadiran Bapak/Ibu/Saudara sekalian guna berpartisipasi aktif dan memberikan masukan yang konstruktif demi kelancaran bersama.`;
+          hasil = `Sehubungan dengan dilaksanakannya agenda penting terkait ${pClean}, kami sangat mengharapkan kesediaan serta kehadiran Bapak/Ibu/Saudara sekalian guna berpartisipasi aktif demi kelancaran bersama.`;
         }
 
         hasilTeksAITerakhir = hasil;
@@ -421,7 +397,7 @@
         resBox.classList.remove('hidden');
         btn.innerHTML = `<span>✨ Rangkai Ulang dengan AI</span>`;
         btn.disabled = false;
-      }, 500);
+      }, 400);
     }
 
     function terapkanTeksAI() {
@@ -439,55 +415,29 @@
         const el = document.getElementById('ai-field-undangan');
         if (el) el.value = hasilTeksAITerakhir;
       }
-      simpanKeLocalStorage();
       tutupModalAI();
     }
 
-    // ================= MODAL QRIS & UNDUH PDF =================
-    function bukaModalQRIS() {
-      document.getElementById('qris-image').src = QRIS_SRC;
-      document.getElementById('modal-qris').classList.remove('hidden');
-    }
-    function tutupModalQRIS() { document.getElementById('modal-qris').classList.add('hidden'); }
-    function unduhQRIS() {
-      const a = document.createElement('a');
-      a.href = QRIS_SRC;
-      a.download = 'QRIS-Sukma-Bogor.jpg';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    }
-
+    // ================= SIMPAN PDF BERSIH (html2pdf) =================
+    // Fungsi ini membuat PDF murni tanpa tulisan header browser atau link URL!
     function unduhPDFLangsung() {
       const element = document.getElementById('printable-area');
-      const judul = document.querySelector('#printable-area h2')?.textContent.trim() || "Dokumen-Sukma-Bogor";
+      const judul = document.querySelector('#printable-area h2')?.textContent.trim() || "Dokumen";
       const filename = judul.replace(/[/\\?%*:|"<>]/g, '-') + '.pdf';
 
       const opt = {
-        margin: 10,
-        filename: filename,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: 'mm', format: document.body.classList.contains('kertas-f4') ? [215, 330] : 'a4', orientation: 'portrait' }
+        margin:       [8, 8, 8, 8], // Margin rapi di kertas
+        filename:     filename,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true, logging: false },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
       };
+
       html2pdf().set(opt).from(element).save();
     }
 
-    function setKertas(tipe) {
-      const btnA4 = document.getElementById('btn-kertas-a4');
-      const btnF4 = document.getElementById('btn-kertas-f4');
-      if (tipe === 'a4') {
-        document.body.classList.remove('kertas-f4');
-        document.body.classList.add('kertas-a4');
-        btnA4.className = "px-2 py-1 bg-blue-600 text-white font-bold";
-        btnF4.className = "px-2 py-1 text-slate-600 hover:bg-slate-200";
-      } else {
-        document.body.classList.remove('kertas-a4');
-        document.body.classList.add('kertas-f4');
-        btnF4.className = "px-2 py-1 bg-blue-600 text-white font-bold";
-        btnA4.className = "px-2 py-1 text-slate-600 hover:bg-slate-200";
-      }
-    }
+    function bukaModalQRIS() { document.getElementById('modal-qris').classList.remove('hidden'); }
+    function tutupModalQRIS() { document.getElementById('modal-qris').classList.add('hidden'); }
 
     function filterDokumen() {
       const q = document.getElementById('searchInput').value.toLowerCase();
@@ -514,85 +464,38 @@
       document.getElementById('stamp-badge').classList.add('hidden');
 
       if (tipe === 'dashboard') {
+        document.title = "WEB SUKMA BOGOR";
         dashboard.classList.remove('hidden');
         editor.classList.add('hidden');
         window.scrollTo({ top: 0, behavior: 'smooth' });
         return;
       }
 
+      // Ganti judul halaman agar saat disimpan PDF judulnya bersih
+      document.title = tipe.toUpperCase();
+
       dashboard.classList.add('hidden');
       editor.classList.remove('hidden');
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
-      if (tipe === 'utang-piutang') renderUtangPiutang(konten);
-      if (tipe === 'kontrak-kerja') renderKontrakKerja(konten);
-      if (tipe === 'sku') renderSKU(konten);
-      if (tipe === 'jual-beli-tanah') renderJualBeliTanah(konten);
-      if (tipe === 'jual-beli-kendaraan') renderJualBeliKendaraan(konten);
       if (tipe === 'invoice') renderInvoice(konten);
       if (tipe === 'kwitansi') renderKwitansi(konten);
       if (tipe === 'slip-gaji') renderSlipGaji(konten);
+      if (tipe === 'utang-piutang') renderUtangPiutang(konten);
+      if (tipe === 'jual-beli-tanah') renderJualBeliTanah(konten);
+      if (tipe === 'jual-beli-kendaraan') renderJualBeliKendaraan(konten);
       if (tipe === 'sewa-kos') renderSewaKos(konten);
-      if (tipe === 'surat-pernyataan') renderSuratPernyataan(konten);
-      if (tipe === 'surat-jalan') renderSuratJalan(konten);
-      if (tipe === 'surat-kuasa') renderSuratKuasa(konten);
+      if (tipe === 'sku') renderSKU(konten);
       if (tipe === 'lamaran-kerja') renderLamaranKerja(konten);
       if (tipe === 'surat-izin') renderSuratIzin(konten);
+      if (tipe === 'surat-pernyataan') renderSuratPernyataan(konten);
       if (tipe === 'surat-undangan') renderUndangan(konten);
-
-      pasangAutoSaveListener();
-      muatAutoSave(tipe);
-    }
-
-    function pasangAutoSaveListener() {
-      const inputs = document.querySelectorAll('#printable-area input, #printable-area textarea');
-      inputs.forEach(input => {
-        input.addEventListener('input', () => { simpanKeLocalStorage(); });
-      });
-    }
-
-    function simpanKeLocalStorage() {
-      if (!templateAktif) return;
-      const data = {};
-      const inputs = document.querySelectorAll('#printable-area input, #printable-area textarea');
-      inputs.forEach((input, index) => { data['field_' + index] = input.value; });
-      localStorage.setItem('draft_' + templateAktif, JSON.stringify(data));
-    }
-
-    function muatAutoSave(tipe) {
-      const saved = localStorage.getItem('draft_' + tipe);
-      if (saved) {
-        try {
-          const data = JSON.parse(saved);
-          const inputs = document.querySelectorAll('#printable-area input, #printable-area textarea');
-          inputs.forEach((input, index) => {
-            if (data['field_' + index] !== undefined) input.value = data['field_' + index];
-          });
-          if (tipe === 'invoice') hitungTotalInvoice();
-          if (tipe === 'slip-gaji') hitungGaji();
-          if (tipe === 'kwitansi') {
-            const el = document.getElementById('kwitansi-angka');
-            if (el) updateTerbilangKwitansi(el.value);
-          }
-        } catch(e) {}
-      }
     }
 
     function kirimKeWhatsApp() {
-      let pesan = `Halo, berikut berkas resmi dari *WEB SUKMA BOGOR*:\n`;
+      let pesan = `Halo, berikut rincian dari *WEB SUKMA BOGOR*:\n`;
       const title = document.querySelector('#printable-area h2')?.textContent.trim() || "Dokumen";
-      pesan += `*${title}*\n\n`;
-
-      if (templateAktif === 'invoice') {
-        const total = document.getElementById('invoice-total')?.textContent || "Rp 0";
-        pesan += `Total Tagihan: *${total}*\nSilakan cek lampiran invoice resmi. Terima kasih!`;
-      } else if (templateAktif === 'kwitansi') {
-        const terbilang = document.getElementById('kwitansi-terbilang')?.value || "";
-        const angka = document.getElementById('kwitansi-angka')?.value || "0";
-        pesan += `Telah terima pembayaran: *Rp ${Number(angka).toLocaleString('id-ID')}* (${terbilang}). Bukti sah telah diterbitkan.`;
-      } else {
-        pesan += `Dokumen resmi telah selesai dipersiapkan dan ditandatangani.`;
-      }
+      pesan += `*${title}*\n\nDokumen telah selesai dibuat dan ditandatangani. Silakan cek berkas PDF terlampir.`;
       window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(pesan)}`, '_blank');
     }
 
@@ -670,87 +573,213 @@
       const slotId = targetSlotAktif.id;
       targetSlotAktif.innerHTML = `
         <div class="relative group inline-block">
-          <img src="${dataURL}" class="h-12 sm:h-14 mx-auto object-contain pointer-events-none mb-1">
-          <button onclick="hapusTTD('${slotId}')" class="no-print absolute -top-1.5 -right-1.5 bg-rose-500 text-white rounded-full w-4 h-4 text-[9px] flex items-center justify-center shadow-sm hover:bg-rose-600">✕</button>
+          <img src="${dataURL}" class="h-12 mx-auto object-contain pointer-events-none mb-1">
+          <button onclick="hapusTTD('${slotId}')" class="no-print absolute -top-1.5 -right-1.5 bg-rose-500 text-white rounded-full w-4 h-4 text-[9px] flex items-center justify-center shadow-sm">✕</button>
         </div>
       `;
       tutupModalTTD();
-      simpanKeLocalStorage();
     }
     function hapusTTD(slotId) {
       const slot = document.getElementById(slotId);
-      if (slot) slot.innerHTML = `<button onclick="bukaModalTTD('${slotId}')" class="no-print text-[10px] text-blue-600 bg-blue-50 hover:bg-blue-100 border border-blue-200 px-2 py-0.5 rounded-md mb-1 font-medium">✍️ Tanda Tangani</button>`;
-      simpanKeLocalStorage();
+      if (slot) slot.innerHTML = `<button onclick="bukaModalTTD('${slotId}')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">✍️ TTD</button>`;
     }
 
-    // ================= TEMPLATE RENDERING =================
+    // ================= RENDER DOKUMEN =================
 
-    // 1. UTANG PIUTANG
+    // 1. SURAT IZIN / SAKIT (DENGAN KELAS no-print PADA TOMBOL AI & TTD)
+    function renderSuratIzin(el) {
+      el.innerHTML = `
+        <div class="space-y-4 text-xs sm:text-sm">
+          <div class="text-right"><input type="text" placeholder="Kota, Tanggal" class="text-right outline-none border-b border-dashed border-slate-300"></div>
+          <p>Hal: <strong>Permohonan Izin</strong></p>
+          <p>Kepada Yth. Pimpinan / Wali Kelas di Tempat</p>
+          <p>Dengan hormat,</p>
+          
+          <div class="space-y-1 pt-1">
+            <!-- Header baris tombol AI diberi class 'no-print' agar tidak tercetak ke PDF -->
+            <div class="flex justify-between items-center no-print">
+              <label class="font-bold text-slate-700">Alasan Permohonan Izin:</label>
+              <button onclick="bukaModalAI('izin')" class="text-[10px] text-purple-700 bg-purple-100 hover:bg-purple-200 px-2.5 py-1 rounded-md font-bold flex items-center gap-1 shadow-xs transition">
+                <span>✨ Susun Pakai AI</span>
+              </button>
+            </div>
+            <!-- Textarea akan tampil bersih tanpa border saat dicetak -->
+            <textarea id="ai-field-izin" rows="4" class="w-full border border-slate-300 rounded-lg p-2.5 outline-none resize-none leading-relaxed text-slate-700 font-normal" placeholder="Tulis alasan izin di sini atau klik '✨ Susun Pakai AI' di atas..."></textarea>
+          </div>
+
+          <p>Demikian surat permohonan ini saya sampaikan. Atas pengertian dan izin yang diberikan, saya ucapkan terima kasih.</p>
+
+          <div class="flex justify-end pt-6">
+            <div class="text-center w-40">
+              <p class="text-[11px] text-slate-500 mb-1">Hormat saya,</p>
+              <div id="ttd-izin" class="h-14 flex items-end justify-center">
+                <button onclick="bukaModalTTD('ttd-izin')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2.5 py-1 rounded border border-blue-200">✍️ TTD</button>
+              </div>
+              <input type="text" placeholder="Nama Pemohon" class="text-center font-semibold outline-none border-t border-slate-400 w-full pt-1">
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 2. SURAT LAMARAN KERJA
+    function renderLamaranKerja(el) {
+      el.innerHTML = `
+        <div class="space-y-4 text-xs sm:text-sm">
+          <div class="text-right"><input type="text" placeholder="Kota, Tanggal" class="text-right outline-none border-b border-dashed border-slate-300"></div>
+          <p>Hal: <strong>Lamaran Pekerjaan</strong></p>
+          <p>Kepada Yth. Pimpinan Perusahaan: <input type="text" placeholder="Nama PT / Instansi" class="border-b border-dashed border-slate-300 outline-none w-56"></p>
+          <p>Dengan hormat, saya mengajukan diri untuk posisi <strong><input type="text" placeholder="Posisi yang Dilamar" class="border-b border-dashed border-blue-500 outline-none px-1"></strong>.</p>
+          
+          <div class="space-y-1 pt-1">
+            <div class="flex justify-between items-center no-print">
+              <label class="font-bold text-slate-700">Kualifikasi & Promosi Diri:</label>
+              <button onclick="bukaModalAI('lamaran')" class="text-[10px] text-purple-700 bg-purple-100 hover:bg-purple-200 px-2.5 py-1 rounded-md font-bold flex items-center gap-1 shadow-xs transition">
+                <span>✨ Susun Pakai AI</span>
+              </button>
+            </div>
+            <textarea id="ai-field-lamaran" rows="5" class="w-full border border-slate-300 rounded-lg p-2.5 outline-none resize-none leading-relaxed text-slate-700 font-normal" placeholder="Ketik kalimat lamaran atau klik '✨ Susun Pakai AI'..."></textarea>
+          </div>
+
+          <div class="flex justify-end pt-6">
+            <div class="text-center w-40">
+              <p class="text-[11px] text-slate-500 mb-1">Hormat saya,</p>
+              <div id="ttd-lamaran" class="h-14 flex items-end justify-center">
+                <button onclick="bukaModalTTD('ttd-lamaran')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2.5 py-1 rounded border border-blue-200">✍️ TTD</button>
+              </div>
+              <input type="text" placeholder="Nama Lengkap" class="text-center font-semibold outline-none border-t border-slate-400 w-full pt-1">
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 3. SURAT PERNYATAAN BERSAMA
+    function renderSuratPernyataan(el) {
+      el.innerHTML = `
+        <div class="text-center border-b pb-3 mb-4"><h2 class="text-base sm:text-xl font-bold uppercase text-slate-900">SURAT PERNYATAAN BERSAMA</h2></div>
+        <div class="space-y-3 text-xs sm:text-sm">
+          <div class="space-y-1">
+            <div class="flex justify-between items-center no-print">
+              <label class="font-bold text-slate-700">Kesepakatan / Pernyataan Damai:</label>
+              <button onclick="bukaModalAI('pernyataan')" class="text-[10px] text-purple-700 bg-purple-100 hover:bg-purple-200 px-2.5 py-1 rounded-md font-bold flex items-center gap-1 shadow-xs transition">
+                <span>✨ Susun Pakai AI</span>
+              </button>
+            </div>
+            <textarea id="ai-field-pernyataan" rows="4" class="w-full border border-slate-300 rounded-lg p-2.5 outline-none resize-none leading-relaxed text-slate-700" placeholder="Ketik butir kesepakatan atau klik '✨ Susun Pakai AI'..."></textarea>
+          </div>
+          <div class="grid grid-cols-2 gap-4 text-center pt-6">
+            <div><div id="ttd-pernyataan-2" class="h-14 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-pernyataan-2')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2.5 py-1 rounded border border-blue-200">✍️ TTD</button></div><p class="border-t mx-4 pt-1 font-medium">( Pihak II )</p></div>
+            <div><div id="ttd-pernyataan-1" class="h-14 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-pernyataan-1')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2.5 py-1 rounded border border-blue-200">✍️ TTD</button></div><p class="border-t mx-4 pt-1 font-medium">( Pihak I )</p></div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 4. INVOICE (BERSIH)
+    function renderInvoice(el) {
+      el.innerHTML = `
+        <div class="flex justify-between items-start border-b pb-3 mb-4">
+          <div class="flex-1">
+            <h2 class="text-xl sm:text-2xl font-bold uppercase tracking-wider text-slate-900">INVOICE</h2>
+            <input type="text" placeholder="Nama Usaha Anda" class="font-semibold text-sm w-full outline-none border-b border-dashed border-slate-300">
+          </div>
+          <div class="text-right">
+            <input type="text" value="INV-${Date.now().toString().slice(-4)}" class="text-right font-mono font-medium outline-none border-b border-dashed border-slate-300 text-xs w-24">
+          </div>
+        </div>
+        <div class="table-responsive mb-4">
+          <table class="w-full text-xs border-collapse">
+            <thead>
+              <tr class="border-b border-t border-slate-300 font-semibold text-left">
+                <th class="py-1.5">Deskripsi</th>
+                <th class="py-1.5 text-right w-12">Qty</th>
+                <th class="py-1.5 text-right w-24">Harga</th>
+                <th class="py-1.5 text-right w-24">Total</th>
+              </tr>
+            </thead>
+            <tbody id="invoice-items">
+              <tr class="border-b border-slate-100">
+                <td class="py-1.5"><input type="text" placeholder="Item barang/jasa" class="w-full outline-none"></td>
+                <td class="py-1.5"><input type="number" value="1" min="1" oninput="hitungTotalInvoice()" class="inv-qty w-full text-right outline-none"></td>
+                <td class="py-1.5"><input type="number" value="0" min="0" oninput="hitungTotalInvoice()" class="inv-harga w-full text-right outline-none"></td>
+                <td class="py-1.5 text-right font-medium inv-subtotal">0</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button onclick="tambahBarisInvoice()" class="text-[11px] bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded mb-4 font-medium no-print">+ Tambah Baris</button>
+        <div class="flex justify-between items-center border-t pt-3">
+          <span class="font-bold text-xs sm:text-sm">Total Tagihan:</span>
+          <span id="invoice-total" class="font-bold text-sm sm:text-base text-blue-600">Rp 0</span>
+        </div>
+      `;
+    }
+
+    // 5. KWITANSI
+    function renderKwitansi(el) {
+      el.innerHTML = `
+        <div class="border-2 border-slate-700 p-4 sm:p-5 rounded-lg space-y-3">
+          <div class="flex justify-between items-center border-b-2 border-slate-700 pb-2">
+            <h2 class="text-xl sm:text-2xl font-bold tracking-widest text-slate-900">KWITANSI</h2>
+            <input type="text" value="KWT-${Date.now().toString().slice(-4)}" class="font-mono font-medium outline-none text-right text-xs w-24">
+          </div>
+          <div class="space-y-2 text-xs">
+            <div class="flex items-center"><span class="w-28 text-slate-600">Diterima dari:</span><input type="text" placeholder="Nama Pembayar" class="flex-1 outline-none border-b border-dashed border-slate-400 font-medium"></div>
+            <div class="flex items-start"><span class="w-28 text-slate-600 pt-0.5">Uang Sejumlah:</span><input type="text" id="kwitansi-terbilang" readonly placeholder="Otomatis terisi" class="flex-1 outline-none border-b border-dashed border-slate-400 italic bg-transparent"></div>
+          </div>
+          <div class="flex justify-between items-end pt-4">
+            <div class="bg-slate-100 border border-slate-300 p-2 rounded text-base font-bold text-slate-900">
+              Rp <input type="number" id="kwitansi-angka" oninput="updateTerbilangKwitansi(this.value)" placeholder="0" class="bg-transparent outline-none w-28 font-bold">
+            </div>
+            <div class="text-center w-36">
+              <input type="text" placeholder="Kota, Tgl" class="text-center text-[10px] outline-none w-full border-b border-dashed border-slate-300 mb-1">
+              <div id="ttd-kwitansi" class="h-12 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-kwitansi')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">✍️ TTD</button></div>
+              <p class="border-t border-slate-400 pt-0.5 font-medium text-[11px]">( ...... )</p>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 6. SLIP GAJI
+    function renderSlipGaji(el) {
+      el.innerHTML = `
+        <div class="border-b pb-3 mb-3 text-center"><h2 class="text-base sm:text-xl font-bold uppercase tracking-wider text-slate-900">SLIP GAJI</h2><input type="text" placeholder="Nama Perusahaan" class="text-center font-semibold text-xs sm:text-sm w-full outline-none"></div>
+        <div class="grid grid-cols-2 gap-3 mb-4 text-xs">
+          <div class="bg-slate-50 p-2.5 rounded-lg border"><p class="font-bold border-b pb-1 mb-1">Penerimaan</p><div class="flex justify-between"><span>Gaji:</span><input type="number" id="gaji-pokok" value="0" oninput="hitungGaji()" class="w-20 text-right outline-none bg-transparent"></div></div>
+          <div class="bg-slate-50 p-2.5 rounded-lg border"><p class="font-bold border-b pb-1 mb-1">Potongan</p><div class="flex justify-between"><span>Potongan:</span><input type="number" id="potongan-bpjs" value="0" oninput="hitungGaji()" class="w-20 text-right outline-none bg-transparent"></div></div>
+        </div>
+        <div class="bg-blue-50 p-2.5 rounded-lg flex justify-between items-center text-xs font-bold"><span>Gaji Bersih:</span><span id="gaji-total" class="text-blue-700 text-sm">Rp 0</span></div>
+        <div class="grid grid-cols-2 gap-4 text-center pt-4">
+          <div><div id="ttd-gaji-karyawan" class="h-12 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-gaji-karyawan')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border">✍️ TTD</button></div><p class="border-t mx-4">( Karyawan )</p></div>
+          <div><div id="ttd-gaji-keuangan" class="h-12 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-gaji-keuangan')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border">✍️ TTD</button></div><p class="border-t mx-4">( Keuangan )</p></div>
+        </div>
+      `;
+    }
+
+    // 7. UTANG PIUTANG
     function renderUtangPiutang(el) {
       el.innerHTML = `
         <div class="text-center border-b pb-3 mb-4"><h2 class="text-base sm:text-xl font-bold uppercase text-slate-900">SURAT PERJANJIAN UTANG PIUTANG</h2><p class="text-[10px] sm:text-xs text-slate-500">(Pinjam Meminjam Uang Bermaterai Sah)</p></div>
-        <div class="space-y-3">
-          <p>Pada hari ini, tanggal <input type="text" placeholder="Tanggal Hari Ini" class="border-b border-dashed border-slate-300 outline-none font-medium">, kami yang bertanda tangan di bawah ini:</p>
-          <div class="pl-2 sm:pl-4 space-y-1">
-            <p class="text-[11px] font-bold text-slate-700 uppercase">I. PIHAK PERTAMA (PEMBERI PINJAMAN):</p>
-            <div class="flex"><span class="w-28 sm:w-32 text-slate-500">Nama</span>: <input type="text" placeholder="Nama Lengkap" class="outline-none flex-1 font-medium border-b border-dashed border-slate-300"></div>
-            <div class="flex"><span class="w-28 sm:w-32 text-slate-500">NIK / KTP</span>: <input type="text" placeholder="Nomor KTP" class="outline-none flex-1 border-b border-dashed border-slate-300"></div>
-          </div>
-          <div class="pl-2 sm:pl-4 space-y-1 pt-1">
-            <p class="text-[11px] font-bold text-slate-700 uppercase">II. PIHAK KEDUA (PEMINJAM):</p>
-            <div class="flex"><span class="w-28 sm:w-32 text-slate-500">Nama</span>: <input type="text" placeholder="Nama Lengkap" class="outline-none flex-1 font-medium border-b border-dashed border-slate-300"></div>
-            <div class="flex"><span class="w-28 sm:w-32 text-slate-500">NIK / KTP</span>: <input type="text" placeholder="Nomor KTP" class="outline-none flex-1 border-b border-dashed border-slate-300"></div>
-          </div>
-          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-1.5 text-xs">
-            <p>1. <strong>Nominal:</strong> Sebesar <strong>Rp <input type="number" placeholder="0" class="border-b border-dashed border-slate-400 font-bold outline-none text-slate-900 w-32"></strong>.</p>
-            <p>2. <strong>Batas Pelunasan:</strong> Tanggal <input type="date" class="outline-none border-b border-slate-300 bg-transparent font-medium">.</p>
-            <p>3. <strong>Jaminan:</strong> Berupa <input type="text" placeholder="BPKB Motor / Tanpa Jaminan" class="border-b border-dashed border-slate-300 outline-none w-64">.</p>
-          </div>
-          <div class="grid grid-cols-2 gap-4 text-center pt-4">
-            <div><p class="text-[10px] text-slate-500 mb-1">Peminjam,</p><div id="ttd-utang-peminjam" class="h-14 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-utang-peminjam')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">✍️ TTD</button></div><p class="border-t mx-4 pt-1 font-medium">( ...... )</p></div>
-            <div><p class="text-[10px] text-slate-500 mb-0.5">Pemberi Pinjaman,</p><span class="text-[8px] text-slate-400 border border-slate-300 px-1 rounded inline-block mb-0.5">Materai</span><div id="ttd-utang-pemberi" class="h-12 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-utang-pemberi')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">✍️ TTD</button></div><p class="border-t mx-4 pt-1 font-medium">( ...... )</p></div>
-          </div>
-        </div>
-      `;
-    }
-
-    // 2. KONTRAK KERJA
-    function renderKontrakKerja(el) {
-      el.innerHTML = `
-        <div class="text-center border-b pb-3 mb-4"><h2 class="text-base sm:text-xl font-bold uppercase text-slate-900">SURAT PERJANJIAN KERJA (SPK)</h2></div>
-        <div class="space-y-3">
-          <div class="pl-2 sm:pl-4 space-y-1">
-            <div class="flex"><span class="w-28 sm:w-32 text-slate-500">Pihak I (Toko)</span>: <input type="text" placeholder="Nama Usaha" class="outline-none flex-1 font-medium border-b border-dashed border-slate-300"></div>
-            <div class="flex"><span class="w-28 sm:w-32 text-slate-500">Pihak II (Staf)</span>: <input type="text" placeholder="Nama Karyawan" class="outline-none flex-1 font-medium border-b border-dashed border-slate-300"></div>
-          </div>
-          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-1.5 text-xs">
-            <p>1. <strong>Jabatan:</strong> <input type="text" placeholder="Kasir / Admin" class="border-b border-dashed border-slate-300 outline-none font-bold w-48"></p>
-            <p>2. <strong>Upah:</strong> Rp <input type="number" placeholder="0" class="border-b border-dashed border-slate-400 font-bold outline-none w-32"> /bulan.</p>
-          </div>
-          <div class="grid grid-cols-2 gap-4 text-center pt-4">
-            <div><p class="text-[10px] text-slate-500 mb-1">Karyawan,</p><div id="ttd-kontrak-karyawan" class="h-14 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-kontrak-karyawan')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">✍️ TTD</button></div><p class="border-t mx-4">( ...... )</p></div>
-            <div><p class="text-[10px] text-slate-500 mb-1">Pimpinan,</p><div id="ttd-kontrak-pimpinan" class="h-14 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-kontrak-pimpinan')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">✍️ TTD</button></div><p class="border-t mx-4">( ...... )</p></div>
-          </div>
-        </div>
-      `;
-    }
-
-    // 3. SKU
-    function renderSKU(el) {
-      el.innerHTML = `
-        <div class="text-center border-b pb-3 mb-4"><h2 class="text-base sm:text-xl font-bold uppercase text-slate-900">SURAT KETERANGAN USAHA</h2></div>
         <div class="space-y-3 text-xs">
           <div class="pl-2 sm:pl-4 space-y-1">
-            <div class="flex"><span class="w-24 text-slate-500">Nama:</span><input type="text" placeholder="Nama Pemilik" class="outline-none flex-1 border-b"></div>
-            <div class="flex"><span class="w-24 text-slate-500">Usaha:</span><input type="text" placeholder="Nama Toko" class="outline-none flex-1 border-b"></div>
+            <div class="flex"><span class="w-28 text-slate-500">Pemberi Pinjaman:</span><input type="text" placeholder="Nama Lengkap" class="outline-none flex-1 border-b border-dashed border-slate-300"></div>
+            <div class="flex"><span class="w-28 text-slate-500">Peminjam:</span><input type="text" placeholder="Nama Lengkap" class="outline-none flex-1 border-b border-dashed border-slate-300"></div>
           </div>
-          <p>Dibuat untuk keperluan: <strong><input type="text" placeholder="Pengajuan Pinjaman KUR Bank" class="border-b outline-none w-64"></strong>.</p>
-          <div class="flex justify-end pt-4"><div class="text-center w-40"><p class="text-[10px] text-slate-500 mb-1">Lurah / Kades,</p><div id="ttd-sku-lurah" class="h-12 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-sku-lurah')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">✍️ TTD</button></div><p class="border-t">( ...... )</p></div></div>
+          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-1.5">
+            <p>1. <strong>Nominal:</strong> Sebesar <strong>Rp <input type="number" placeholder="0" class="border-b font-bold w-32"></strong>.</p>
+            <p>2. <strong>Batas Pelunasan:</strong> Tanggal <input type="date" class="outline-none bg-transparent font-medium border-b border-slate-300"></p>
+          </div>
+          <div class="grid grid-cols-2 gap-4 text-center pt-4">
+            <div><p class="text-[10px] text-slate-500 mb-1">Peminjam,</p><div id="ttd-utang-peminjam" class="h-14 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-utang-peminjam')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border">✍️ TTD</button></div><p class="border-t mx-4 pt-1 font-medium">( ...... )</p></div>
+            <div><p class="text-[10px] text-slate-500 mb-0.5">Pemberi Pinjaman,</p><span class="text-[8px] text-slate-400 border border-slate-300 px-1 rounded inline-block mb-0.5">Materai</span><div id="ttd-utang-pemberi" class="h-12 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-utang-pemberi')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border">✍️ TTD</button></div><p class="border-t mx-4 pt-1 font-medium">( ...... )</p></div>
+          </div>
         </div>
       `;
     }
 
-    // 4. JUAL BELI TANAH
+    // 8. JUAL BELI TANAH GIRIK
     function renderJualBeliTanah(el) {
       el.innerHTML = `
         <div class="text-center border-b pb-3 mb-4"><h2 class="text-base sm:text-xl font-bold uppercase text-slate-900">SURAT JUAL BELI TANAH (GIRIK)</h2></div>
@@ -767,14 +796,14 @@
           </div>
           <p>Harga: <strong>Rp <input type="number" placeholder="0" class="border-b font-bold w-28"></strong> (Lunas).</p>
           <div class="grid grid-cols-2 gap-4 text-center pt-4">
-            <div><p class="text-[10px] text-slate-500 mb-1">Pembeli,</p><div id="ttd-tanah-pembeli" class="h-12 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-tanah-pembeli')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">✍️ TTD</button></div><p class="border-t mx-4">( ...... )</p></div>
-            <div><p class="text-[10px] text-slate-500 mb-0.5">Penjual,</p><span class="text-[8px] text-slate-400 border border-slate-300 px-1 rounded inline-block mb-0.5">Materai</span><div id="ttd-tanah-penjual" class="h-10 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-tanah-penjual')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">✍️ TTD</button></div><p class="border-t mx-4">( ...... )</p></div>
+            <div><p class="text-[10px] text-slate-500 mb-1">Pembeli,</p><div id="ttd-tanah-pembeli" class="h-12 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-tanah-pembeli')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border">✍️ TTD</button></div><p class="border-t mx-4">( ...... )</p></div>
+            <div><p class="text-[10px] text-slate-500 mb-0.5">Penjual,</p><span class="text-[8px] text-slate-400 border border-slate-300 px-1 rounded inline-block mb-0.5">Materai</span><div id="ttd-tanah-penjual" class="h-10 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-tanah-penjual')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border">✍️ TTD</button></div><p class="border-t mx-4">( ...... )</p></div>
           </div>
         </div>
       `;
     }
 
-    // 5. JUAL BELI KENDARAAN
+    // 9. JUAL BELI MOTOR/MOBIL
     function renderJualBeliKendaraan(el) {
       el.innerHTML = `
         <div class="text-center border-b pb-3 mb-4"><h2 class="text-base sm:text-xl font-bold uppercase text-slate-900">JUAL BELI KENDARAAN</h2></div>
@@ -789,62 +818,14 @@
           </div>
           <p>Harga: <strong>Rp <input type="number" placeholder="0" class="border-b font-bold w-28"></strong>.</p>
           <div class="grid grid-cols-2 gap-4 text-center pt-4">
-            <div><p class="text-[10px] text-slate-500 mb-1">Pembeli,</p><div id="ttd-kendaraan-pembeli" class="h-12 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-kendaraan-pembeli')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">✍️ TTD</button></div><p class="border-t mx-4">( ...... )</p></div>
-            <div><p class="text-[10px] text-slate-500 mb-0.5">Penjual,</p><span class="text-[8px] text-slate-400 border border-slate-300 px-1 rounded inline-block mb-0.5">Materai</span><div id="ttd-kendaraan-penjual" class="h-10 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-kendaraan-penjual')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">✍️ TTD</button></div><p class="border-t mx-4">( ...... )</p></div>
+            <div><p class="text-[10px] text-slate-500 mb-1">Pembeli,</p><div id="ttd-kendaraan-pembeli" class="h-12 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-kendaraan-pembeli')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border">✍️ TTD</button></div><p class="border-t mx-4">( ...... )</p></div>
+            <div><p class="text-[10px] text-slate-500 mb-0.5">Penjual,</p><span class="text-[8px] text-slate-400 border border-slate-300 px-1 rounded inline-block mb-0.5">Materai</span><div id="ttd-kendaraan-penjual" class="h-10 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-kendaraan-penjual')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border">✍️ TTD</button></div><p class="border-t mx-4">( ...... )</p></div>
           </div>
         </div>
       `;
     }
 
-    // 6. INVOICE
-    function renderInvoice(el) {
-      el.innerHTML = `
-        <div class="flex justify-between items-start border-b pb-3 mb-4">
-          <div class="flex-1"><h2 class="text-xl sm:text-2xl font-bold uppercase text-slate-900">INVOICE</h2><input type="text" placeholder="Nama Usaha" class="font-semibold text-sm w-full outline-none border-b border-dashed border-slate-300"></div>
-          <input type="text" value="INV-${Date.now().toString().slice(-4)}" class="text-right font-mono text-xs outline-none border-b w-24">
-        </div>
-        <div class="table-responsive mb-4">
-          <table class="w-full text-xs border-collapse">
-            <thead><tr class="border-b border-t font-semibold text-left"><th class="py-1">Deskripsi</th><th class="py-1 text-right w-12">Qty</th><th class="py-1 text-right w-24">Harga</th><th class="py-1 text-right w-24">Total</th></tr></thead>
-            <tbody id="invoice-items"><tr class="border-b"><td class="py-1"><input type="text" placeholder="Item" class="w-full outline-none"></td><td class="py-1"><input type="number" value="1" min="1" oninput="hitungTotalInvoice()" class="inv-qty w-full text-right outline-none"></td><td class="py-1"><input type="number" value="0" min="0" oninput="hitungTotalInvoice()" class="inv-harga w-full text-right outline-none"></td><td class="py-1 text-right font-medium inv-subtotal">0</td></tr></tbody>
-          </table>
-        </div>
-        <button onclick="tambahBarisInvoice()" class="text-[11px] bg-slate-100 px-2.5 py-1 rounded mb-4 no-print">+ Tambah Baris</button>
-        <div class="flex justify-between items-center border-t pt-3"><span class="font-bold text-xs">Total Tagihan:</span><span id="invoice-total" class="font-bold text-base text-blue-600">Rp 0</span></div>
-      `;
-    }
-
-    // 7. KWITANSI
-    function renderKwitansi(el) {
-      el.innerHTML = `
-        <div class="border-2 border-slate-700 p-4 rounded-lg space-y-3">
-          <div class="flex justify-between items-center border-b-2 border-slate-700 pb-2"><h2 class="text-xl font-bold tracking-widest text-slate-900">KWITANSI</h2><input type="text" value="KWT-${Date.now().toString().slice(-4)}" class="font-mono text-xs outline-none text-right w-24"></div>
-          <div class="space-y-2 text-xs">
-            <div class="flex items-center"><span class="w-28 text-slate-600">Diterima dari:</span><input type="text" placeholder="Nama Pembayar" class="flex-1 outline-none border-b border-dashed border-slate-400 font-medium"></div>
-            <div class="flex items-start"><span class="w-28 text-slate-600 pt-0.5">Uang Sejumlah:</span><input type="text" id="kwitansi-terbilang" readonly placeholder="Otomatis terisi" class="flex-1 outline-none border-b border-dashed border-slate-400 italic bg-transparent"></div>
-          </div>
-          <div class="flex justify-between items-end pt-4">
-            <div class="bg-slate-100 border p-2 rounded text-base font-bold text-slate-900">Rp <input type="number" id="kwitansi-angka" oninput="updateTerbilangKwitansi(this.value)" placeholder="0" class="bg-transparent outline-none w-28 font-bold"></div>
-            <div class="text-center w-36"><div id="ttd-kwitansi" class="h-12 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-kwitansi')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">✍️ TTD</button></div><p class="border-t pt-0.5 text-[11px]">( ...... )</p></div>
-          </div>
-        </div>
-      `;
-    }
-
-    // 8. SLIP GAJI
-    function renderSlipGaji(el) {
-      el.innerHTML = `
-        <div class="border-b pb-3 mb-3 text-center"><h2 class="text-base sm:text-xl font-bold uppercase text-slate-900">SLIP GAJI</h2><input type="text" placeholder="Nama Usaha" class="text-center text-xs w-full outline-none"></div>
-        <div class="grid grid-cols-2 gap-3 mb-4 text-xs">
-          <div class="bg-slate-50 p-2.5 rounded-lg border"><p class="font-bold border-b pb-1 mb-1">Gaji & Tunjangan</p><div class="flex justify-between"><span>Gaji:</span><input type="number" id="gaji-pokok" value="0" oninput="hitungGaji()" class="w-20 text-right outline-none bg-transparent"></div></div>
-          <div class="bg-slate-50 p-2.5 rounded-lg border"><p class="font-bold border-b pb-1 mb-1">Potongan</p><div class="flex justify-between"><span>Potongan:</span><input type="number" id="potongan-bpjs" value="0" oninput="hitungGaji()" class="w-20 text-right outline-none bg-transparent"></div></div>
-        </div>
-        <div class="bg-blue-50 p-2 rounded-lg flex justify-between items-center text-xs font-bold"><span>Total Bersih:</span><span id="gaji-total" class="text-blue-700 text-sm">Rp 0</span></div>
-        <div class="grid grid-cols-2 gap-4 text-center pt-4"><div><div id="ttd-gaji-karyawan" class="h-10 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-gaji-karyawan')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border">✍️ TTD</button></div><p class="border-t mx-4">( Karyawan )</p></div><div><div id="ttd-gaji-keuangan" class="h-10 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-gaji-keuangan')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border">✍️ TTD</button></div><p class="border-t mx-4">( Keuangan )</p></div></div>
-      `;
-    }
-
-    // 9. SEWA KOS
+    // 10. SEWA KOS
     function renderSewaKos(el) {
       el.innerHTML = `
         <div class="text-center border-b pb-3 mb-4"><h2 class="text-base sm:text-xl font-bold uppercase text-slate-900">PERJANJIAN SEWA KOS / RUMAH</h2></div>
@@ -857,128 +838,42 @@
       `;
     }
 
-    // 10. SURAT JALAN
-    function renderSuratJalan(el) {
+    // 11. SKU
+    function renderSKU(el) {
       el.innerHTML = `
-        <div class="text-center border-b pb-3 mb-4"><h2 class="text-base sm:text-xl font-bold uppercase text-slate-900">SURAT JALAN</h2></div>
-        <div class="space-y-2 text-xs">
-          <div class="flex"><span class="w-20 text-slate-500">Tujuan:</span><input type="text" placeholder="Penerima" class="outline-none flex-1 border-b"></div>
-          <table class="w-full border-t border-b py-1"><tr><th class="text-left">Barang</th><th class="text-right">Qty</th></tr><tr><td><input type="text" placeholder="Nama barang" class="w-full outline-none"></td><td class="text-right"><input type="text" placeholder="1 Dus" class="w-16 text-right outline-none"></td></tr></table>
-          <div class="grid grid-cols-2 gap-4 text-center pt-4"><div><div id="ttd-jalan-penerima" class="h-10 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-jalan-penerima')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border">✍️ TTD</button></div><p class="border-t mx-4">( Penerima )</p></div><div><div id="ttd-jalan-hormat" class="h-10 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-jalan-hormat')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border">✍️ TTD</button></div><p class="border-t mx-4">( Pengirim )</p></div></div>
-        </div>
-      `;
-    }
-
-    // 11. SURAT KUASA
-    function renderSuratKuasa(el) {
-      el.innerHTML = `
-        <div class="text-center border-b pb-3 mb-4"><h2 class="text-base sm:text-xl font-bold uppercase text-slate-900">SURAT KUASA</h2></div>
-        <div class="space-y-2 text-xs">
-          <textarea rows="3" class="w-full border rounded p-2 outline-none" placeholder="Rincian wewenang yang diberikan..."></textarea>
-          <div class="grid grid-cols-2 gap-4 text-center pt-4"><div><div id="ttd-kuasa-penerima" class="h-10 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-kuasa-penerima')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border">✍️ TTD</button></div><p class="border-t mx-4">( Penerima Kuasa )</p></div><div><div id="ttd-kuasa-pemberi" class="h-10 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-kuasa-pemberi')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border">✍️ TTD</button></div><p class="border-t mx-4">( Pemberi Kuasa )</p></div></div>
-        </div>
-      `;
-    }
-
-    // 12. LAMARAN KERJA (DILENGKAPI TOMBOL AI)
-    function renderLamaranKerja(el) {
-      el.innerHTML = `
+        <div class="text-center border-b pb-3 mb-4"><h2 class="text-base sm:text-xl font-bold uppercase text-slate-900">SURAT KETERANGAN USAHA</h2></div>
         <div class="space-y-3 text-xs">
-          <div class="text-right"><input type="text" placeholder="Kota, Tanggal" class="text-right outline-none border-b"></div>
-          <p>Hal: <strong>Lamaran Pekerjaan</strong></p>
-          <p>Kepada Yth. Pimpinan Perusahaan: <input type="text" placeholder="Nama Perusahaan" class="border-b outline-none w-48"></p>
-          <p>Dengan hormat, saya mengajukan diri untuk bergabung pada posisi <strong><input type="text" placeholder="Posisi yang Dilamar" class="border-b border-dashed border-blue-500 outline-none px-1"></strong>.</p>
-          
-          <div class="space-y-1 pt-1">
-            <div class="flex justify-between items-center">
-              <label class="font-bold text-slate-700">Pernyataan Kualifikasi & Promosi Diri:</label>
-              <button onclick="bukaModalAI('lamaran')" class="no-print text-[10px] text-purple-700 bg-purple-100 hover:bg-purple-200 px-2 py-0.5 rounded-md font-bold flex items-center gap-1">
-                <span>✨ Susun Pakai AI</span>
-              </button>
-            </div>
-            <textarea id="ai-field-lamaran" rows="4" class="w-full border border-slate-300 rounded-lg p-2.5 outline-none resize-none leading-relaxed text-slate-700" placeholder="Ketik kalimat lamaran Anda di sini atau klik tombol '✨ Susun Pakai AI' di atas untuk merangkai otomatis..."></textarea>
+          <div class="pl-2 sm:pl-4 space-y-1">
+            <div class="flex"><span class="w-24 text-slate-500">Nama:</span><input type="text" placeholder="Nama Pemilik" class="outline-none flex-1 border-b"></div>
+            <div class="flex"><span class="w-24 text-slate-500">Usaha:</span><input type="text" placeholder="Nama Toko" class="outline-none flex-1 border-b"></div>
           </div>
-
-          <div class="flex justify-end pt-4">
-            <div class="text-center w-36">
-              <p class="text-[10px] text-slate-500 mb-1">Hormat saya,</p>
-              <div id="ttd-lamaran" class="h-12 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-lamaran')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border">✍️ TTD</button></div>
-              <input type="text" placeholder="Nama Lengkap" class="text-center font-semibold outline-none border-t w-full">
-            </div>
-          </div>
+          <p>Dibuat untuk keperluan: <strong><input type="text" placeholder="Pengajuan Pinjaman KUR Bank" class="border-b outline-none w-64"></strong>.</p>
+          <div class="flex justify-end pt-4"><div class="text-center w-40"><p class="text-[10px] text-slate-500 mb-1">Lurah / Kades,</p><div id="ttd-sku-lurah" class="h-12 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-sku-lurah')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border">✍️ TTD</button></div><p class="border-t">( ...... )</p></div></div>
         </div>
       `;
     }
 
-    // 13. SURAT IZIN (DILENGKAPI TOMBOL AI)
-    function renderSuratIzin(el) {
-      el.innerHTML = `
-        <div class="space-y-3 text-xs">
-          <div class="text-right"><input type="text" placeholder="Kota, Tanggal" class="text-right outline-none border-b"></div>
-          <p>Hal: <strong>Permohonan Izin</strong></p>
-          
-          <div class="space-y-1 pt-1">
-            <div class="flex justify-between items-center">
-              <label class="font-bold text-slate-700">Alasan Permohonan Izin:</label>
-              <button onclick="bukaModalAI('izin')" class="no-print text-[10px] text-purple-700 bg-purple-100 hover:bg-purple-200 px-2 py-0.5 rounded-md font-bold flex items-center gap-1">
-                <span>✨ Susun Pakai AI</span>
-              </button>
-            </div>
-            <textarea id="ai-field-izin" rows="3" class="w-full border border-slate-300 rounded-lg p-2.5 outline-none resize-none leading-relaxed text-slate-700" placeholder="Ketik alasan izin di sini atau klik tombol '✨ Susun Pakai AI' di atas..."></textarea>
-          </div>
-
-          <div class="flex justify-end pt-4">
-            <div class="text-center w-36">
-              <div id="ttd-izin" class="h-12 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-izin')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border">✍️ TTD</button></div>
-              <input type="text" placeholder="Nama Pemohon" class="text-center font-semibold outline-none border-t w-full">
-            </div>
-          </div>
-        </div>
-      `;
-    }
-
-    // 14. PERNYATAAN BERSAMA (DILENGKAPI TOMBOL AI)
-    function renderSuratPernyataan(el) {
-      el.innerHTML = `
-        <div class="text-center border-b pb-3 mb-4"><h2 class="text-base sm:text-xl font-bold uppercase text-slate-900">SURAT PERNYATAAN BERSAMA</h2></div>
-        <div class="space-y-3 text-xs">
-          <div class="space-y-1">
-            <div class="flex justify-between items-center">
-              <label class="font-bold text-slate-700">Butir Kesepakatan / Pernyataan Damai:</label>
-              <button onclick="bukaModalAI('pernyataan')" class="no-print text-[10px] text-purple-700 bg-purple-100 hover:bg-purple-200 px-2 py-0.5 rounded-md font-bold flex items-center gap-1">
-                <span>✨ Susun Pakai AI</span>
-              </button>
-            </div>
-            <textarea id="ai-field-pernyataan" rows="4" class="w-full border border-slate-300 rounded-lg p-2.5 outline-none resize-none leading-relaxed text-slate-700" placeholder="Ketik kesepakatan damai di sini atau klik '✨ Susun Pakai AI'..."></textarea>
-          </div>
-          <div class="grid grid-cols-2 gap-4 text-center pt-4">
-            <div><div id="ttd-pernyataan-2" class="h-12 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-pernyataan-2')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border">✍️ TTD</button></div><p class="border-t mx-4">( Pihak II )</p></div>
-            <div><div id="ttd-pernyataan-1" class="h-12 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-pernyataan-1')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border">✍️ TTD</button></div><p class="border-t mx-4">( Pihak I )</p></div>
-          </div>
-        </div>
-      `;
-    }
-
-    // 15. SURAT UNDANGAN (DILENGKAPI TOMBOL AI)
+    // 12. SURAT UNDANGAN
     function renderUndangan(el) {
       el.innerHTML = `
         <div class="text-center border-b pb-3 mb-4"><h2 class="text-base sm:text-xl font-bold uppercase text-slate-900">SURAT UNDANGAN</h2></div>
-        <div class="space-y-3 text-xs">
+        <div class="space-y-3 text-xs sm:text-sm">
           <div class="space-y-1">
-            <div class="flex justify-between items-center">
-              <label class="font-bold text-slate-700">Maksud Acara & Undangan:</label>
-              <button onclick="bukaModalAI('undangan')" class="no-print text-[10px] text-purple-700 bg-purple-100 hover:bg-purple-200 px-2 py-0.5 rounded-md font-bold flex items-center gap-1">
+            <div class="flex justify-between items-center no-print">
+              <label class="font-bold text-slate-700">Maksud Acara:</label>
+              <button onclick="bukaModalAI('undangan')" class="text-[10px] text-purple-700 bg-purple-100 hover:bg-purple-200 px-2.5 py-1 rounded-md font-bold flex items-center gap-1 shadow-xs transition">
                 <span>✨ Susun Pakai AI</span>
               </button>
             </div>
             <textarea id="ai-field-undangan" rows="3" class="w-full border border-slate-300 rounded-lg p-2.5 outline-none resize-none leading-relaxed text-slate-700" placeholder="Ketik agenda kegiatan atau klik '✨ Susun Pakai AI'..."></textarea>
           </div>
+          <p>Mengundang kehadiran pada: <input type="text" placeholder="Hari/Tgl, Waktu & Tempat" class="border-b outline-none w-full mt-1"></p>
           <div class="flex justify-end pt-4"><div class="text-center w-36"><div id="ttd-undangan" class="h-12 flex items-end justify-center"><button onclick="bukaModalTTD('ttd-undangan')" class="no-print text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded border">✍️ TTD</button></div><p class="border-t font-medium">( Panitia )</p></div></div>
         </div>
       `;
     }
 
-    // Helper Invoice & Gaji
+    // Helper Invoice & Kwitansi
     function tambahBarisInvoice() {
       const tbody = document.getElementById('invoice-items');
       const tr = document.createElement('tr');
@@ -990,7 +885,6 @@
         <td class="py-1 text-right font-medium inv-subtotal">0</td>
       `;
       tbody.appendChild(tr);
-      pasangAutoSaveListener();
     }
 
     function hitungTotalInvoice() {
@@ -1006,23 +900,19 @@
       });
       const totalEl = document.getElementById('invoice-total');
       if (totalEl) totalEl.textContent = 'Rp ' + grandTotal.toLocaleString('id-ID');
-      simpanKeLocalStorage();
     }
 
     function updateTerbilangKwitansi(val) {
       const teks = angkaKeTerbilang(val);
       document.getElementById('kwitansi-terbilang').value = teks;
-      simpanKeLocalStorage();
     }
 
     function hitungGaji() {
       const pokok = parseFloat(document.getElementById('gaji-pokok')?.value || 0);
-      const tunjangan = parseFloat(document.getElementById('gaji-tunjangan')?.value || 0);
       const bpjs = parseFloat(document.getElementById('potongan-bpjs')?.value || 0);
-      const bersih = Math.max(0, (pokok + tunjangan) - bpjs);
+      const bersih = Math.max(0, pokok - bpjs);
       const el = document.getElementById('gaji-total');
       if (el) el.textContent = 'Rp ' + bersih.toLocaleString('id-ID');
-      simpanKeLocalStorage();
     }
   </script>
 </body>
